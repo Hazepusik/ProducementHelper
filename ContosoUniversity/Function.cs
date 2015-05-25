@@ -12,16 +12,16 @@ namespace ContosoUniversity
     using System;
     using System.Collections.Generic;
     
-    public partial class Bid
+    public partial class Function
     {
-        public int id { get; set; }
-        public int tenderId { get; set; }
-        public int propertyId { get; set; }
-        public int participantId { get; set; }
-        public double value { get; set; }
+        public Function()
+        {
+            this.Property = new HashSet<Property>();
+        }
     
-        public virtual Participant Participant { get; set; }
-        public virtual Tender Tender { get; set; }
-        public virtual Property Property { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+    
+        public virtual ICollection<Property> Property { get; set; }
     }
 }

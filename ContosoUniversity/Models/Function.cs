@@ -1,34 +1,40 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
 
 namespace ContosoUniversity
 {
-    [MetadataType(typeof(ParticipantMetaData))]
-    public partial class Participant
+    [MetadataType(typeof(FunctionMetaData))]
+    public partial class Function
     {
-        public static Participant byId(int id)
+
+        public static Function byId(int id)
         {
             using (ProcurementEntities db = new ProcurementEntities())
             {
-                return db.Participant.FirstOrDefault(x => x.id == id);
+                return db.Function.FirstOrDefault(x => x.id == id);
             }
         }
 
-        public static List<Participant> QueryAll()
+        public static List<Function> QueryAll()
         {
             using (ProcurementEntities db = new ProcurementEntities())
             {
-                return db.Participant.ToList();
+                return db.Function.ToList();
             }
         }
     }
 
-    public class ParticipantMetaData
+    public class FunctionMetaData
     {
+
         [Required]
-        [Display(Name = "Имя")]
+        [Display(Name = "Имя функции")]
         public string name { get; set; }
+
     }
+
+
 
 }

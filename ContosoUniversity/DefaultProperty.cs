@@ -18,7 +18,7 @@ namespace ContosoUniversity
         public int tenderId { get; set; }
         public int propertyId { get; set; }
     
-        public virtual Property Property { get; set; }
         public virtual Tender Tender { get; set; }
+        public virtual Property Property { get; set; }
     }
 }

@@ -1,0 +1,85 @@
+﻿@model ContosoUniversity.Property
+
+@{
+    ViewBag.Title = "Подробности";
+}
+
+<h2>Подробности</h2>
+
+<div>
+    <h4>Критерий оценки</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Имя")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+        <dt>
+            @Html.DisplayName("Важность")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.importance)
+        </dd>
+        <dt>
+            @Html.DisplayName("Является подкритерием")
+        </dt>
+
+        <dd>
+            @Html.Raw(Model.isSubpropertyOf == null ? "-" : Property.byId(Model.isSubpropertyOf ?? 0).name)
+        </dd>
+        <dt>
+            @Html.DisplayName("Минимальное значение критерия")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.minValue)
+        </dd>
+        <dt>
+            @Html.DisplayName("Максимальное значение критерия")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.maxValue)
+        </dd>
+        <dt>
+            @Html.DisplayName("Шаг изменения значений критерия")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.step)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Лучше большее значение критерия?")
+        </dt>
+
+        <dd>
+            @Html.Raw(Model.toMax ? "Да" : "Нет")
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Критерий по умолчанию?")
+        </dt>
+
+        <dd>
+            @Html.Raw(Model.isDefault ?? true ? "Да" : "Нет")
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Функция аппроксимации")
+        </dt>
+
+        <dd>
+            @Html.Raw(Function.byId(Model.functionId).name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Назад", "Index")
+</p>

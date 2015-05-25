@@ -55,6 +55,13 @@
     <Property Name="StudentID" Type="int" Nullable="false" />
     <Property Name="Grade" Type="int" />
   </EntityType>
+  <EntityType Name="Function">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
   <EntityType Name="OfficeAssignment">
     <Key>
       <PropertyRef Name="InstructorID" />
@@ -91,9 +98,9 @@
     <Property Name="minValue" Type="float" />
     <Property Name="maxValue" Type="float" />
     <Property Name="step" Type="float" />
-    <Property Name="func" Type="int" />
-    <Property Name="toMax" Type="bit" />
+    <Property Name="toMax" Type="bit" Nullable="false" />
     <Property Name="isDefault" Type="bit" />
+    <Property Name="functionId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Tender">
     <Key>
@@ -265,6 +272,32 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Property_Function">
+    <End Role="Function" Type="Self.Function" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Property" Type="Self.Property" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Function">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Property">
+        <PropertyRef Name="functionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Property_Property">
+    <End Role="Property" Type="Self.Property" Multiplicity="0..1" />
+    <End Role="Property1" Type="Self.Property" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Property1">
+        <PropertyRef Name="isSubpropertyOf" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="ProcurementModelStoreContainer">
     <EntitySet Name="Bid" EntityType="Self.Bid" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
@@ -272,6 +305,7 @@
     <EntitySet Name="DefaultProperty" EntityType="Self.DefaultProperty" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Enrollment" EntityType="Self.Enrollment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Function" EntityType="Self.Function" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OfficeAssignment" EntityType="Self.OfficeAssignment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Participant" EntityType="Self.Participant" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
@@ -324,6 +358,14 @@
     <AssociationSet Name="FK_DefaultProperty_Tender" Association="Self.FK_DefaultProperty_Tender">
       <End Role="Tender" EntitySet="Tender" />
       <End Role="DefaultProperty" EntitySet="DefaultProperty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Property_Function" Association="Self.FK_Property_Function">
+      <End Role="Function" EntitySet="Function" />
+      <End Role="Property" EntitySet="Property" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Property_Property" Association="Self.FK_Property_Property">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="Property1" EntitySet="Property" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

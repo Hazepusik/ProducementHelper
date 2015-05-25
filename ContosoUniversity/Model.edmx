@@ -60,6 +60,13 @@
           <Property Name="StudentID" Type="int" Nullable="false" />
           <Property Name="Grade" Type="int" />
         </EntityType>
+        <EntityType Name="Function">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="OfficeAssignment">
           <Key>
             <PropertyRef Name="InstructorID" />
@@ -96,9 +103,9 @@
           <Property Name="minValue" Type="float" />
           <Property Name="maxValue" Type="float" />
           <Property Name="step" Type="float" />
-          <Property Name="func" Type="int" />
-          <Property Name="toMax" Type="bit" />
+          <Property Name="toMax" Type="bit" Nullable="false" />
           <Property Name="isDefault" Type="bit" />
+          <Property Name="functionId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Tender">
           <Key>
@@ -270,6 +277,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Property_Function">
+          <End Role="Function" Type="Self.Function" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Property" Type="Self.Property" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Function">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Property">
+              <PropertyRef Name="functionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Property_Property">
+          <End Role="Property" Type="Self.Property" Multiplicity="0..1" />
+          <End Role="Property1" Type="Self.Property" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Property">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Property1">
+              <PropertyRef Name="isSubpropertyOf" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ProcurementModelStoreContainer">
           <EntitySet Name="Bid" EntityType="Self.Bid" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
@@ -277,6 +310,7 @@
           <EntitySet Name="DefaultProperty" EntityType="Self.DefaultProperty" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Enrollment" EntityType="Self.Enrollment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Function" EntityType="Self.Function" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OfficeAssignment" EntityType="Self.OfficeAssignment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Participant" EntityType="Self.Participant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
@@ -330,6 +364,14 @@
             <End Role="Tender" EntitySet="Tender" />
             <End Role="DefaultProperty" EntitySet="DefaultProperty" />
           </AssociationSet>
+          <AssociationSet Name="FK_Property_Function" Association="Self.FK_Property_Function">
+            <End Role="Function" EntitySet="Function" />
+            <End Role="Property" EntitySet="Property" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Property_Property" Association="Self.FK_Property_Property">
+            <End Role="Property" EntitySet="Property" />
+            <End Role="Property1" EntitySet="Property" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -344,14 +386,9 @@
           <EntitySet Name="OfficeAssignment" EntityType="ProcurementModel.OfficeAssignment" />
           <EntitySet Name="Participant" EntityType="ProcurementModel.Participant" />
           <EntitySet Name="Person" EntityType="ProcurementModel.Person" />
-          <EntitySet Name="Property" EntityType="ProcurementModel.Property" />
           <EntitySet Name="Tender" EntityType="ProcurementModel.Tender" />
           <AssociationSet Name="FK_Bid_Participant" Association="ProcurementModel.FK_Bid_Participant">
             <End Role="Participant" EntitySet="Participant" />
-            <End Role="Bid" EntitySet="Bid" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Bid_Property" Association="ProcurementModel.FK_Bid_Property">
-            <End Role="Property" EntitySet="Property" />
             <End Role="Bid" EntitySet="Bid" />
           </AssociationSet>
           <AssociationSet Name="FK_Bid_Tender" Association="ProcurementModel.FK_Bid_Tender">
@@ -365,10 +402,6 @@
           <AssociationSet Name="FK_dbo_Enrollment_dbo_Course_CourseID" Association="ProcurementModel.FK_dbo_Enrollment_dbo_Course_CourseID">
             <End Role="Course" EntitySet="Course" />
             <End Role="Enrollment" EntitySet="Enrollment" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DefaultProperty_Property" Association="ProcurementModel.FK_DefaultProperty_Property">
-            <End Role="Property" EntitySet="Property" />
-            <End Role="DefaultProperty" EntitySet="DefaultProperty" />
           </AssociationSet>
           <AssociationSet Name="FK_DefaultProperty_Tender" Association="ProcurementModel.FK_DefaultProperty_Tender">
             <End Role="Tender" EntitySet="Tender" />
@@ -390,7 +423,25 @@
             <End Role="Course" EntitySet="Course" />
             <End Role="Person" EntitySet="Person" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="Function" EntityType="ProcurementModel.Function" />
+          <EntitySet Name="Property" EntityType="ProcurementModel.Property" />
+          <AssociationSet Name="FK_Bid_Property" Association="ProcurementModel.FK_Bid_Property">
+            <End Role="Property" EntitySet="Property" />
+            <End Role="Bid" EntitySet="Bid" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DefaultProperty_Property" Association="ProcurementModel.FK_DefaultProperty_Property">
+            <End Role="Property" EntitySet="Property" />
+            <End Role="DefaultProperty" EntitySet="DefaultProperty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Property_Function" Association="ProcurementModel.FK_Property_Function">
+            <End Role="Function" EntitySet="Function" />
+            <End Role="Property" EntitySet="Property" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Property_Property" Association="ProcurementModel.FK_Property_Property">
+            <End Role="Property" EntitySet="Property" />
+            <End Role="Property1" EntitySet="Property" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Bid">
           <Key>
             <PropertyRef Name="id" />
@@ -401,8 +452,8 @@
           <Property Name="participantId" Type="Int32" Nullable="false" />
           <Property Name="value" Type="Double" Nullable="false" />
           <NavigationProperty Name="Participant" Relationship="ProcurementModel.FK_Bid_Participant" FromRole="Bid" ToRole="Participant" />
-          <NavigationProperty Name="Property" Relationship="ProcurementModel.FK_Bid_Property" FromRole="Bid" ToRole="Property" />
           <NavigationProperty Name="Tender" Relationship="ProcurementModel.FK_Bid_Tender" FromRole="Bid" ToRole="Tender" />
+          <NavigationProperty Name="Property" Relationship="ProcurementModel.FK_Bid_Property" FromRole="Bid" ToRole="Property" />
         </EntityType>
         <EntityType Name="Course">
           <Key>
@@ -423,8 +474,8 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="tenderId" Type="Int32" Nullable="false" />
           <Property Name="propertyId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Property" Relationship="ProcurementModel.FK_DefaultProperty_Property" FromRole="DefaultProperty" ToRole="Property" />
           <NavigationProperty Name="Tender" Relationship="ProcurementModel.FK_DefaultProperty_Tender" FromRole="DefaultProperty" ToRole="Tender" />
+          <NavigationProperty Name="Property" Relationship="ProcurementModel.FK_DefaultProperty_Property" FromRole="DefaultProperty" ToRole="Property" />
         </EntityType>
         <EntityType Name="Department">
           <Key>
@@ -481,23 +532,6 @@
           <NavigationProperty Name="OfficeAssignment" Relationship="ProcurementModel.FK_dbo_OfficeAssignment_dbo_Instructor_InstructorID" FromRole="Person" ToRole="OfficeAssignment" />
           <NavigationProperty Name="Course" Relationship="ProcurementModel.CourseInstructor" FromRole="Person" ToRole="Course" />
         </EntityType>
-        <EntityType Name="Property">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="importance" Type="Int32" Nullable="false" />
-          <Property Name="isSubpropertyOf" Type="Int32" />
-          <Property Name="minValue" Type="Double" />
-          <Property Name="maxValue" Type="Double" />
-          <Property Name="step" Type="Double" />
-          <Property Name="func" Type="Int32" />
-          <Property Name="toMax" Type="Boolean" />
-          <Property Name="isDefault" Type="Boolean" />
-          <NavigationProperty Name="Bid" Relationship="ProcurementModel.FK_Bid_Property" FromRole="Property" ToRole="Bid" />
-          <NavigationProperty Name="DefaultProperty" Relationship="ProcurementModel.FK_DefaultProperty_Property" FromRole="Property" ToRole="DefaultProperty" />
-        </EntityType>
         <EntityType Name="Tender">
           <Key>
             <PropertyRef Name="id" />
@@ -521,20 +555,6 @@
             </Principal>
             <Dependent Role="Bid">
               <PropertyRef Name="participantId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Bid_Property">
-          <End Type="ProcurementModel.Property" Role="Property" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="ProcurementModel.Bid" Role="Bid" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Property">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Bid">
-              <PropertyRef Name="propertyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -577,18 +597,6 @@
             </Principal>
             <Dependent Role="Enrollment">
               <PropertyRef Name="CourseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DefaultProperty_Property">
-          <End Type="ProcurementModel.Property" Role="Property" Multiplicity="1" />
-          <End Type="ProcurementModel.DefaultProperty" Role="DefaultProperty" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Property">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="DefaultProperty">
-              <PropertyRef Name="propertyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -645,6 +653,86 @@
         <Association Name="CourseInstructor">
           <End Type="ProcurementModel.Course" Role="Course" Multiplicity="*" />
           <End Type="ProcurementModel.Person" Role="Person" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Function">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Property" Relationship="ProcurementModel.FK_Property_Function" FromRole="Function" ToRole="Property" />
+        </EntityType>
+        <EntityType Name="Property">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="importance" Type="Int32" Nullable="false" />
+          <Property Name="isSubpropertyOf" Type="Int32" />
+          <Property Name="minValue" Type="Double" />
+          <Property Name="maxValue" Type="Double" />
+          <Property Name="step" Type="Double" />
+          <Property Name="toMax" Type="Boolean" Nullable="false" />
+          <Property Name="isDefault" Type="Boolean" />
+          <Property Name="functionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Bid" Relationship="ProcurementModel.FK_Bid_Property" FromRole="Property" ToRole="Bid" />
+          <NavigationProperty Name="DefaultProperty" Relationship="ProcurementModel.FK_DefaultProperty_Property" FromRole="Property" ToRole="DefaultProperty" />
+          <NavigationProperty Name="Function" Relationship="ProcurementModel.FK_Property_Function" FromRole="Property" ToRole="Function" />
+          <NavigationProperty Name="Property1" Relationship="ProcurementModel.FK_Property_Property" FromRole="Property" ToRole="Property1" />
+          <NavigationProperty Name="Property2" Relationship="ProcurementModel.FK_Property_Property" FromRole="Property1" ToRole="Property" />
+        </EntityType>
+        <Association Name="FK_Bid_Property">
+          <End Type="ProcurementModel.Property" Role="Property" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ProcurementModel.Bid" Role="Bid" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Property">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Bid">
+              <PropertyRef Name="propertyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DefaultProperty_Property">
+          <End Type="ProcurementModel.Property" Role="Property" Multiplicity="1" />
+          <End Type="ProcurementModel.DefaultProperty" Role="DefaultProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Property">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DefaultProperty">
+              <PropertyRef Name="propertyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Property_Function">
+          <End Type="ProcurementModel.Function" Role="Function" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ProcurementModel.Property" Role="Property" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Function">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Property">
+              <PropertyRef Name="functionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Property_Property">
+          <End Type="ProcurementModel.Property" Role="Property" Multiplicity="0..1" />
+          <End Type="ProcurementModel.Property" Role="Property1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Property">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Property1">
+              <PropertyRef Name="isSubpropertyOf" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -732,22 +820,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Property">
-            <EntityTypeMapping TypeName="ProcurementModel.Property">
-              <MappingFragment StoreEntitySet="Property">
-                <ScalarProperty Name="isDefault" ColumnName="isDefault" />
-                <ScalarProperty Name="toMax" ColumnName="toMax" />
-                <ScalarProperty Name="func" ColumnName="func" />
-                <ScalarProperty Name="step" ColumnName="step" />
-                <ScalarProperty Name="maxValue" ColumnName="maxValue" />
-                <ScalarProperty Name="minValue" ColumnName="minValue" />
-                <ScalarProperty Name="isSubpropertyOf" ColumnName="isSubpropertyOf" />
-                <ScalarProperty Name="importance" ColumnName="importance" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Tender">
             <EntityTypeMapping TypeName="ProcurementModel.Tender">
               <MappingFragment StoreEntitySet="Tender">
@@ -767,6 +839,30 @@
               <ScalarProperty Name="CourseID" ColumnName="CourseID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Function">
+            <EntityTypeMapping TypeName="ProcurementModel.Function">
+              <MappingFragment StoreEntitySet="Function">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Property">
+            <EntityTypeMapping TypeName="ProcurementModel.Property">
+              <MappingFragment StoreEntitySet="Property">
+                <ScalarProperty Name="functionId" ColumnName="functionId" />
+                <ScalarProperty Name="isDefault" ColumnName="isDefault" />
+                <ScalarProperty Name="toMax" ColumnName="toMax" />
+                <ScalarProperty Name="step" ColumnName="step" />
+                <ScalarProperty Name="maxValue" ColumnName="maxValue" />
+                <ScalarProperty Name="minValue" ColumnName="minValue" />
+                <ScalarProperty Name="isSubpropertyOf" ColumnName="isSubpropertyOf" />
+                <ScalarProperty Name="importance" ColumnName="importance" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

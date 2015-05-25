@@ -33,7 +33,8 @@ namespace ContosoUniversity
         public virtual DbSet<OfficeAssignment> OfficeAssignment { get; set; }
         public virtual DbSet<Participant> Participant { get; set; }
         public virtual DbSet<Person> Person { get; set; }
-        public virtual DbSet<Property> Property { get; set; }
         public virtual DbSet<Tender> Tender { get; set; }
+        public virtual DbSet<Function> Function { get; set; }
+        public virtual DbSet<Property> Property { get; set; }
     }
 }

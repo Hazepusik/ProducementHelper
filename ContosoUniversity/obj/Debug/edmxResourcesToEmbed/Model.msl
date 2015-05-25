@@ -81,22 +81,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Property">
-      <EntityTypeMapping TypeName="ProcurementModel.Property">
-        <MappingFragment StoreEntitySet="Property">
-          <ScalarProperty Name="isDefault" ColumnName="isDefault" />
-          <ScalarProperty Name="toMax" ColumnName="toMax" />
-          <ScalarProperty Name="func" ColumnName="func" />
-          <ScalarProperty Name="step" ColumnName="step" />
-          <ScalarProperty Name="maxValue" ColumnName="maxValue" />
-          <ScalarProperty Name="minValue" ColumnName="minValue" />
-          <ScalarProperty Name="isSubpropertyOf" ColumnName="isSubpropertyOf" />
-          <ScalarProperty Name="importance" ColumnName="importance" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Tender">
       <EntityTypeMapping TypeName="ProcurementModel.Tender">
         <MappingFragment StoreEntitySet="Tender">
@@ -116,5 +100,29 @@
         <ScalarProperty Name="CourseID" ColumnName="CourseID" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="Function">
+      <EntityTypeMapping TypeName="ProcurementModel.Function">
+        <MappingFragment StoreEntitySet="Function">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Property">
+      <EntityTypeMapping TypeName="ProcurementModel.Property">
+        <MappingFragment StoreEntitySet="Property">
+          <ScalarProperty Name="functionId" ColumnName="functionId" />
+          <ScalarProperty Name="isDefault" ColumnName="isDefault" />
+          <ScalarProperty Name="toMax" ColumnName="toMax" />
+          <ScalarProperty Name="step" ColumnName="step" />
+          <ScalarProperty Name="maxValue" ColumnName="maxValue" />
+          <ScalarProperty Name="minValue" ColumnName="minValue" />
+          <ScalarProperty Name="isSubpropertyOf" ColumnName="isSubpropertyOf" />
+          <ScalarProperty Name="importance" ColumnName="importance" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

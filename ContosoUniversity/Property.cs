@@ -18,6 +18,7 @@ namespace ContosoUniversity
         {
             this.Bid = new HashSet<Bid>();
             this.DefaultProperty = new HashSet<DefaultProperty>();
+            this.Property1 = new HashSet<Property>();
         }
     
         public int id { get; set; }
@@ -27,11 +28,14 @@ namespace ContosoUniversity
         public Nullable<double> minValue { get; set; }
         public Nullable<double> maxValue { get; set; }
         public Nullable<double> step { get; set; }
-        public Nullable<int> func { get; set; }
-        public Nullable<bool> toMax { get; set; }
+        public bool toMax { get; set; }
         public Nullable<bool> isDefault { get; set; }
+        public int functionId { get; set; }
     
         public virtual ICollection<Bid> Bid { get; set; }
         public virtual ICollection<DefaultProperty> DefaultProperty { get; set; }
+        public virtual Function Function { get; set; }
+        public virtual ICollection<Property> Property1 { get; set; }
+        public virtual Property Property2 { get; set; }
     }
 }
