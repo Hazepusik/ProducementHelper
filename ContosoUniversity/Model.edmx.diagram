@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8706ef2217b54de999624344c5fe5475" Name="Diagram1">
+        <EntityTypeShape EntityType="ProcurementModel.Bid" Width="1.5" PointX="3" PointY="8.5" />
+        <EntityTypeShape EntityType="ProcurementModel.Course" Width="1.5" PointX="5.25" PointY="3.5" />
+        <EntityTypeShape EntityType="ProcurementModel.DefaultProperty" Width="1.5" PointX="3" PointY="11.75" />
+        <EntityTypeShape EntityType="ProcurementModel.Department" Width="1.5" PointX="3" PointY="3.375" />
+        <EntityTypeShape EntityType="ProcurementModel.Enrollment" Width="1.5" PointX="7.5" PointY="2.875" />
+        <EntityTypeShape EntityType="ProcurementModel.OfficeAssignment" Width="1.5" PointX="3" PointY="1.125" />
+        <EntityTypeShape EntityType="ProcurementModel.Participant" Width="1.5" PointX="0.75" PointY="5.875" />
+        <EntityTypeShape EntityType="ProcurementModel.Person" Width="1.5" PointX="0.75" PointY="2" />
+        <EntityTypeShape EntityType="ProcurementModel.Property" Width="1.5" PointX="0.75" PointY="12.25" />
+        <EntityTypeShape EntityType="ProcurementModel.Tender" Width="1.5" PointX="0.75" PointY="8.5" />
+        <AssociationConnector Association="ProcurementModel.FK_Bid_Participant" />
+        <AssociationConnector Association="ProcurementModel.FK_Bid_Property" />
+        <AssociationConnector Association="ProcurementModel.FK_Bid_Tender" />
+        <AssociationConnector Association="ProcurementModel.FK_dbo_Course_dbo_Department_DepartmentID" />
+        <AssociationConnector Association="ProcurementModel.FK_dbo_Enrollment_dbo_Course_CourseID" />
+        <AssociationConnector Association="ProcurementModel.FK_DefaultProperty_Property" />
+        <AssociationConnector Association="ProcurementModel.FK_DefaultProperty_Tender" />
+        <AssociationConnector Association="ProcurementModel.FK_dbo_Department_dbo_Instructor_InstructorID" />
+        <AssociationConnector Association="ProcurementModel.FK_dbo_Enrollment_dbo_Person_StudentID" />
+        <AssociationConnector Association="ProcurementModel.FK_dbo_OfficeAssignment_dbo_Instructor_InstructorID" />
+        <AssociationConnector Association="ProcurementModel.CourseInstructor" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

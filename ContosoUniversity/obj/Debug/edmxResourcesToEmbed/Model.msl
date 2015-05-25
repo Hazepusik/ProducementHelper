@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ProcurementModelStoreContainer" CdmEntityContainer="ProcurementEntities">
+    <EntitySetMapping Name="Bid">
+      <EntityTypeMapping TypeName="ProcurementModel.Bid">
+        <MappingFragment StoreEntitySet="Bid">
+          <ScalarProperty Name="value" ColumnName="value" />
+          <ScalarProperty Name="participantId" ColumnName="participantId" />
+          <ScalarProperty Name="propertyId" ColumnName="propertyId" />
+          <ScalarProperty Name="tenderId" ColumnName="tenderId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Course">
+      <EntityTypeMapping TypeName="ProcurementModel.Course">
+        <MappingFragment StoreEntitySet="Course">
+          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+          <ScalarProperty Name="Credits" ColumnName="Credits" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DefaultProperty">
+      <EntityTypeMapping TypeName="ProcurementModel.DefaultProperty">
+        <MappingFragment StoreEntitySet="DefaultProperty">
+          <ScalarProperty Name="propertyId" ColumnName="propertyId" />
+          <ScalarProperty Name="tenderId" ColumnName="tenderId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Department">
+      <EntityTypeMapping TypeName="ProcurementModel.Department">
+        <MappingFragment StoreEntitySet="Department">
+          <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+          <ScalarProperty Name="InstructorID" ColumnName="InstructorID" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="Budget" ColumnName="Budget" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Enrollment">
+      <EntityTypeMapping TypeName="ProcurementModel.Enrollment">
+        <MappingFragment StoreEntitySet="Enrollment">
+          <ScalarProperty Name="Grade" ColumnName="Grade" />
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+          <ScalarProperty Name="EnrollmentID" ColumnName="EnrollmentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OfficeAssignment">
+      <EntityTypeMapping TypeName="ProcurementModel.OfficeAssignment">
+        <MappingFragment StoreEntitySet="OfficeAssignment">
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="InstructorID" ColumnName="InstructorID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Participant">
+      <EntityTypeMapping TypeName="ProcurementModel.Participant">
+        <MappingFragment StoreEntitySet="Participant">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Person">
+      <EntityTypeMapping TypeName="ProcurementModel.Person">
+        <MappingFragment StoreEntitySet="Person">
+          <ScalarProperty Name="Discriminator" ColumnName="Discriminator" />
+          <ScalarProperty Name="EnrollmentDate" ColumnName="EnrollmentDate" />
+          <ScalarProperty Name="HireDate" ColumnName="HireDate" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Property">
+      <EntityTypeMapping TypeName="ProcurementModel.Property">
+        <MappingFragment StoreEntitySet="Property">
+          <ScalarProperty Name="isDefault" ColumnName="isDefault" />
+          <ScalarProperty Name="toMax" ColumnName="toMax" />
+          <ScalarProperty Name="func" ColumnName="func" />
+          <ScalarProperty Name="step" ColumnName="step" />
+          <ScalarProperty Name="maxValue" ColumnName="maxValue" />
+          <ScalarProperty Name="minValue" ColumnName="minValue" />
+          <ScalarProperty Name="isSubpropertyOf" ColumnName="isSubpropertyOf" />
+          <ScalarProperty Name="importance" ColumnName="importance" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tender">
+      <EntityTypeMapping TypeName="ProcurementModel.Tender">
+        <MappingFragment StoreEntitySet="Tender">
+          <ScalarProperty Name="maxPrice" ColumnName="maxPrice" />
+          <ScalarProperty Name="minPrice" ColumnName="minPrice" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="CourseInstructor" TypeName="ProcurementModel.CourseInstructor" StoreEntitySet="CourseInstructor">
+      <EndProperty Name="Person">
+        <ScalarProperty Name="ID" ColumnName="InstructorID" />
+      </EndProperty>
+      <EndProperty Name="Course">
+        <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
