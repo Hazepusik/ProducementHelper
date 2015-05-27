@@ -5,17 +5,14 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="8706ef2217b54de999624344c5fe5475" Name="Diagram1">
-        <EntityTypeShape EntityType="ProcurementModel.Bid" Width="1.5" PointX="8" PointY="10.5" />
         <EntityTypeShape EntityType="ProcurementModel.Course" Width="1.5" PointX="5.25" PointY="1.125" />
         <EntityTypeShape EntityType="ProcurementModel.DefaultProperty" Width="1.5" PointX="8" PointY="7.75" />
         <EntityTypeShape EntityType="ProcurementModel.Department" Width="1.5" PointX="3" PointY="1.125" />
         <EntityTypeShape EntityType="ProcurementModel.Enrollment" Width="1.5" PointX="7.5" PointY="2" />
         <EntityTypeShape EntityType="ProcurementModel.OfficeAssignment" Width="1.5" PointX="3" PointY="4.375" />
-        <EntityTypeShape EntityType="ProcurementModel.Participant" Width="1.5" PointX="5.75" PointY="15.875" />
-        <EntityTypeShape EntityType="ProcurementModel.Person" Width="1.5" PointX="0.75" PointY="2" />
-        <EntityTypeShape EntityType="ProcurementModel.Tender" Width="1.5" PointX="5.75" PointY="7.5" />
-        <AssociationConnector Association="ProcurementModel.FK_Bid_Participant" />
-        <AssociationConnector Association="ProcurementModel.FK_Bid_Tender" />
+        <EntityTypeShape EntityType="ProcurementModel.Participant" Width="1.5" PointX="2.375" PointY="13.25" />
+        <EntityTypeShape EntityType="ProcurementModel.Person" Width="1.5" PointX="0.75" PointY="2.125" />
+        <EntityTypeShape EntityType="ProcurementModel.Tender" Width="1.5" PointX="6.875" PointY="10.5" />
         <AssociationConnector Association="ProcurementModel.FK_dbo_Course_dbo_Department_DepartmentID" />
         <AssociationConnector Association="ProcurementModel.FK_dbo_Enrollment_dbo_Course_CourseID" />
         <AssociationConnector Association="ProcurementModel.FK_DefaultProperty_Tender" />
@@ -23,12 +20,15 @@
         <AssociationConnector Association="ProcurementModel.FK_dbo_Enrollment_dbo_Person_StudentID" />
         <AssociationConnector Association="ProcurementModel.FK_dbo_OfficeAssignment_dbo_Instructor_InstructorID" />
         <AssociationConnector Association="ProcurementModel.CourseInstructor" />
-        <EntityTypeShape EntityType="ProcurementModel.Function" Width="1.5" PointX="3.5" PointY="12.125" />
-        <EntityTypeShape EntityType="ProcurementModel.Property" Width="1.5" PointX="5.75" PointY="11" />
-        <AssociationConnector Association="ProcurementModel.FK_Bid_Property" />
+        <EntityTypeShape EntityType="ProcurementModel.Function" Width="1.5" PointX="4.875" PointY="8.875" />
+        <EntityTypeShape EntityType="ProcurementModel.Property" Width="1.5" PointX="1.75" PointY="7.5" />
         <AssociationConnector Association="ProcurementModel.FK_DefaultProperty_Property" />
         <AssociationConnector Association="ProcurementModel.FK_Property_Function" />
         <AssociationConnector Association="ProcurementModel.FK_Property_Property" />
+        <EntityTypeShape EntityType="ProcurementModel.Bid" Width="1.5" PointX="4.875" PointY="11.125" />
+        <AssociationConnector Association="ProcurementModel.FK_Bid_Participant" />
+        <AssociationConnector Association="ProcurementModel.FK_Bid_Property" />
+        <AssociationConnector Association="ProcurementModel.FK_Bid_Tender" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

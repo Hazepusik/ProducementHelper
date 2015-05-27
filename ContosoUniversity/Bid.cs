@@ -16,12 +16,12 @@ namespace ContosoUniversity
     {
         public int id { get; set; }
         public int tenderId { get; set; }
-        public int propertyId { get; set; }
         public int participantId { get; set; }
-        public double value { get; set; }
+        public Nullable<int> propertyId { get; set; }
+        public Nullable<double> value { get; set; }
     
         public virtual Participant Participant { get; set; }
-        public virtual Tender Tender { get; set; }
         public virtual Property Property { get; set; }
+        public virtual Tender Tender { get; set; }
     }
 }

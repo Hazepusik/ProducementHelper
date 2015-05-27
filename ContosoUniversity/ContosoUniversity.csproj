@@ -124,6 +124,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-multiselect.css" />
     <Content Include="Models\Msg.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstructorController.cs" />
+    <Compile Include="Controllers\BidController.cs" />
     <Compile Include="Controllers\TenderController.cs" />
     <Compile Include="Controllers\PropertyController.cs" />
     <Compile Include="Controllers\ParticipantController.cs" />
@@ -205,6 +207,7 @@
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Function.cs" />
+    <Compile Include="Models\Bid.cs" />
     <Compile Include="Models\Tender.cs" />
     <Compile Include="Models\Property.cs" />
     <Compile Include="Models\Participiant.cs" />
@@ -243,6 +246,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootstrap-multiselect.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Model.edmx">
@@ -262,6 +266,7 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
+    <Content Include="Less\bootstrap-multiselect.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -273,6 +278,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\mindmup-editabletable.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -325,6 +331,11 @@
     <Content Include="Views\Tender\Details.cshtml" />
     <Content Include="Views\Tender\Edit.cshtml" />
     <Content Include="Views\Tender\Index.cshtml" />
+    <Content Include="Views\Bid\Create.cshtml" />
+    <Content Include="Views\Bid\Delete.cshtml" />
+    <Content Include="Views\Bid\Details.cshtml" />
+    <Content Include="Views\Bid\Edit.cshtml" />
+    <Content Include="Views\Bid\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

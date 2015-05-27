@@ -25,7 +25,6 @@ namespace ContosoUniversity
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Bid> Bid { get; set; }
         public virtual DbSet<Course> Course { get; set; }
         public virtual DbSet<DefaultProperty> DefaultProperty { get; set; }
         public virtual DbSet<Department> Department { get; set; }
@@ -36,5 +35,6 @@ namespace ContosoUniversity
         public virtual DbSet<Tender> Tender { get; set; }
         public virtual DbSet<Function> Function { get; set; }
         public virtual DbSet<Property> Property { get; set; }
+        public virtual DbSet<Bid> Bid { get; set; }
     }
 }

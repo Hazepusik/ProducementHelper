@@ -14,69 +14,33 @@ using System.Data.Entity.Infrastructure;
 
 namespace ContosoUniversity.Controllers
 {
-    public class TenderController : Controller
+    public class BidController : Controller
     {
         private ProcurementEntities db = new ProcurementEntities();
-        
-        // GET: Tender
-        public ViewResult Index(string sortOrder, int? page)
+
+        // GET: Bid
+        public ViewResult Index(int? _tenderId)
         {
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-
-            List<Tender> tenders = Tender.QueryAll();
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    tenders = tenders.OrderByDescending(p => p.name).ToList();
-                    break;
-                default:  // Name ascending 
-                    tenders = tenders.OrderBy(p => p.name).ToList();
-                    break;
-            }
-
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
-            return View(tenders.ToPagedList(pageNumber, pageSize));
+            return View(new BidContainer(_tenderId));
         }
 
 
-        // GET: Tender/Create
+        // GET: Participant/Create
         public ActionResult Create()
         {
-            Tender t = new Tender();
-            return View(t);
+            return View();
         }
 
-        // POST: Tender/Create
+        // POST: Participant/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "name, description, minPrice, maxPrice, participantIds, propertyIds")]Tender tender)
+        public ActionResult Create([Bind(Include = "name")]Participant participant)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    db.Tender.Add(tender);
-                    db.SaveChanges();
-                    // set default
-                    foreach (int participantId in tender.participantIds)
-                    {
-                        Bid bid = new Bid();
-                        bid.tenderId = tender.id;
-                        bid.participantId = participantId;
-                        db.Bid.Add(bid);
-                    }
-                    db.SaveChanges();
-                    foreach (int propertyId in tender.propertyIds)
-                        foreach (int participantId in tender.participantIds)
-                        {
-                            Bid bid = new Bid();
-                            bid.tenderId = tender.id;
-                            bid.participantId = participantId;
-                            bid.propertyId = propertyId;
-                            db.Bid.Add(bid);
-                        }
+                    db.Participant.Add(participant);
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
@@ -87,25 +51,25 @@ namespace ContosoUniversity.Controllers
                 //Log the error (uncomment dex variable name and add a line here to write a log.
                 ModelState.AddModelError("", "Произошла ошибка при сохранении записи. При повторении ошибки обратитесь к администратору");
             }
-            return View(tender);
+            return View(participant);
         }
 
-        // GET: Tender/Edit/5
+        // GET: Participant/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tender Tender = db.Tender.Find(id);
-            if (Tender == null)
+            Participant Participant = db.Participant.Find(id);
+            if (Participant == null)
             {
                 return HttpNotFound();
             }
-            return View(Tender);
+            return View(Participant);
         }
 
-        // POST: Tender/Edit/5
+        // POST: Participant/Edit/5
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         public ActionResult EditPost(int? id)
@@ -114,13 +78,12 @@ namespace ContosoUniversity.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tender TenderToUpdate = db.Tender.Find(id);
-            if (TryUpdateModel(TenderToUpdate, "", new string[] { "name", "description", "minPrice", "maxPrice", "participantIds", "propertyIds" }))
+            Participant ParticipantToUpdate = db.Participant.Find(id);
+            if (TryUpdateModel(ParticipantToUpdate, "",  new string[] { "name" }))
             {
                 try
                 {
                     db.SaveChanges();
-                    // TODO: change tender bids
                     return RedirectToAction("Index");
                 }
                 catch (RetryLimitExceededException)// dex )
@@ -129,25 +92,25 @@ namespace ContosoUniversity.Controllers
                     ModelState.AddModelError("", "Произошла ошибка при изменении записи. При повторении ошибки обратитесь к администратору");
                 }
             }
-            return View(TenderToUpdate);
+            return View(ParticipantToUpdate);
         }
 
-        // GET: Tender/Details/5
+        // GET: Participant/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tender Tender = db.Tender.Find(id);
-            if (Tender == null)
+            Participant Participant = db.Participant.Find(id);
+            if (Participant == null)
             {
                 return HttpNotFound();
             }
-            return View(Tender);
+            return View(Participant);
         }
 
-        // GET: Tender/Delete/5
+        // GET: Participant/Delete/5
         public ActionResult Delete(int? id, bool? saveChangesError = false)
         {
             if (id == null)
@@ -158,23 +121,23 @@ namespace ContosoUniversity.Controllers
             {
                 ViewBag.ErrorMessage = "Произошла ошибка при удалении записи. При повторении ошибки обратитесь к администратору";
             }
-            Tender Tender = db.Tender.Find(id);
-            if (Tender == null)
+            Participant Participant = db.Participant.Find(id);
+            if (Participant == null)
             {
                 return HttpNotFound();
             }
-            return View(Tender);
+            return View(Participant);
         }
 
-        // POST: Tender/Delete/5
+        // POST: Participant/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
             try
             {
-                Tender Tender = db.Tender.Find(id);
-                db.Tender.Remove(Tender);
+                Participant Participant = db.Participant.Find(id);
+                db.Participant.Remove(Participant);
                 db.SaveChanges();
             }
             catch (RetryLimitExceededException )// dex )

@@ -1,17 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="ProcurementModelStoreContainer" CdmEntityContainer="ProcurementEntities">
-    <EntitySetMapping Name="Bid">
-      <EntityTypeMapping TypeName="ProcurementModel.Bid">
-        <MappingFragment StoreEntitySet="Bid">
-          <ScalarProperty Name="value" ColumnName="value" />
-          <ScalarProperty Name="participantId" ColumnName="participantId" />
-          <ScalarProperty Name="propertyId" ColumnName="propertyId" />
-          <ScalarProperty Name="tenderId" ColumnName="tenderId" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Course">
       <EntityTypeMapping TypeName="ProcurementModel.Course">
         <MappingFragment StoreEntitySet="Course">
@@ -120,6 +109,17 @@
           <ScalarProperty Name="isSubpropertyOf" ColumnName="isSubpropertyOf" />
           <ScalarProperty Name="importance" ColumnName="importance" />
           <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Bid">
+      <EntityTypeMapping TypeName="ProcurementModel.Bid">
+        <MappingFragment StoreEntitySet="Bid">
+          <ScalarProperty Name="value" ColumnName="value" />
+          <ScalarProperty Name="propertyId" ColumnName="propertyId" />
+          <ScalarProperty Name="participantId" ColumnName="participantId" />
+          <ScalarProperty Name="tenderId" ColumnName="tenderId" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>

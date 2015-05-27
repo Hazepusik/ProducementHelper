@@ -6,9 +6,9 @@
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="tenderId" Type="int" Nullable="false" />
-    <Property Name="propertyId" Type="int" Nullable="false" />
     <Property Name="participantId" Type="int" Nullable="false" />
-    <Property Name="value" Type="float" Nullable="false" />
+    <Property Name="propertyId" Type="int" />
+    <Property Name="value" Type="float" />
   </EntityType>
   <EntityType Name="Course">
     <Key>
@@ -127,7 +127,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Bid_Property">
-    <End Role="Property" Type="Self.Property" Multiplicity="1">
+    <End Role="Property" Type="Self.Property" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
     <End Role="Bid" Type="Self.Bid" Multiplicity="*" />
