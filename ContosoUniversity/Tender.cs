@@ -16,7 +16,7 @@ namespace ContosoUniversity
     {
         public Tender()
         {
-            this.DefaultProperty = new HashSet<DefaultProperty>();
+            this.Bid = new HashSet<Bid>();
         }
     
         public int id { get; set; }
@@ -25,6 +25,6 @@ namespace ContosoUniversity
         public Nullable<double> minPrice { get; set; }
         public Nullable<double> maxPrice { get; set; }
     
-        public virtual ICollection<DefaultProperty> DefaultProperty { get; set; }
+        public virtual ICollection<Bid> Bid { get; set; }
     }
 }

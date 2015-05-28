@@ -37,13 +37,15 @@ namespace ContosoUniversity.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Table(string table, int tenderId)
+        public ActionResult Table(string def, string max, int tenderId)
         {
             
             try
             {
-                Dictionary<int, Dictionary<int, double>> bids = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, double>>>(table);
+                Dictionary<int, Dictionary<int, double?>> bids = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, double?>>>(def);
                 Tender.byId(tenderId).setBids(bids);
+                bids = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, double?>>>(max);
+                Tender.byId(tenderId).setBids(bids, false);
                 db.SaveChanges();
                 return View("Tender", Tender.byId(tenderId));
 

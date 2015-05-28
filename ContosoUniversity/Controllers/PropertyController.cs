@@ -24,7 +24,7 @@ namespace ContosoUniversity.Controllers
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
 
-            List<Property> properties = ContosoUniversity.Property.QueryAll();
+            List<Property> properties = ContosoUniversity.Property.QueryAll().Where(p => p.isDefault??false).ToList();
             switch (sortOrder)
             {
                 case "name_desc":

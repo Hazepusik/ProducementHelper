@@ -80,25 +80,6 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
 
-
-        function save(id) {
-            data = {}
-            data['id'] = id
-            data['minValue'] = $('#min' + id).val().replace('.', ',')
-            data['maxValue'] = $('#max' + id).val().replace('.', ',')
-            data['importance'] = $('#i' + id).val()
-            data['functionId'] = $('#f' + id).val()
-            data['step'] = $('#s' + id).val().replace('.', ',')
-            var token = $(':input:hidden[name*="RequestVerificationToken"]');
-            data[token.attr('name')] = token.val();
-            data['toMax'] = $('#tm' + id).is(':checked')
-            $.ajax({
-                type: "POST",
-                url: "/Property/Save",
-                data: data,
-            });
-        }
-
         $(document).ready(function() {
             $('#participantIds').multiselect({
                 nonSelectedText: 'Выберите участников'

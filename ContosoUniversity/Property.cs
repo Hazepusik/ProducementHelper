@@ -16,7 +16,7 @@ namespace ContosoUniversity
     {
         public Property()
         {
-            this.DefaultProperty = new HashSet<DefaultProperty>();
+            this.Bid = new HashSet<Bid>();
             this.Property1 = new HashSet<Property>();
         }
     
@@ -32,7 +32,7 @@ namespace ContosoUniversity
         public int functionId { get; set; }
         public Nullable<bool> isPrice { get; set; }
     
-        public virtual ICollection<DefaultProperty> DefaultProperty { get; set; }
+        public virtual ICollection<Bid> Bid { get; set; }
         public virtual Function Function { get; set; }
         public virtual ICollection<Property> Property1 { get; set; }
         public virtual Property Property2 { get; set; }

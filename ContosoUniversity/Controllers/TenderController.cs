@@ -111,7 +111,7 @@ namespace ContosoUniversity.Controllers
             {
                 return HttpNotFound();
             }
-            return RedirectToAction("Edit", new { id = id });
+            return View(Tender);
         }
 
         // POST: Tender/Edit/5
@@ -130,7 +130,7 @@ namespace ContosoUniversity.Controllers
                 {
                     db.SaveChanges();
                     // TODO: change tender bids
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Edit", new { id = id });
                 }
                 catch (RetryLimitExceededException)// dex )
                 {

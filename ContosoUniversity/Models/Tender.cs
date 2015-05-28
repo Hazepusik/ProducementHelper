@@ -86,7 +86,7 @@ namespace ContosoUniversity
             }
         }
 
-        public void setBids(Dictionary<int, Dictionary<int, double>> bids)
+        public void setBids(Dictionary<int, Dictionary<int, double?>> bids, bool defVal = true)
         {
             using (ProcurementEntities db = new ProcurementEntities())
             {
@@ -96,7 +96,10 @@ namespace ContosoUniversity
                                                         && participantIds.Contains(b.participantId)).ToList();
                 foreach (Bid b in bidsToUpdate)
                 {
-                    b.defaultValue = bids[b.participantId][b.propertyId.Value];
+                    if (defVal)
+                        b.defaultValue = bids[b.participantId][b.propertyId.Value] ?? 0;
+                    else
+                        b.maxValue = bids[b.participantId][b.propertyId.Value] ?? 0;
                 }
                 db.SaveChanges();
             }

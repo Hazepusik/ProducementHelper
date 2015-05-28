@@ -140,23 +140,11 @@
     <Compile Include="Controllers\PropertyController.cs" />
     <Compile Include="Controllers\ParticipantController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
-    <Compile Include="Course.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="DAL\SchoolConfiguration.cs" />
     <Compile Include="DAL\SchoolContext.cs" />
     <Compile Include="DAL\SchoolInitializer.cs" />
     <Compile Include="DAL\SchoolInterceptorLogging.cs" />
     <Compile Include="DAL\SchoolInterceptorTransientErrors.cs" />
-    <Compile Include="DefaultProperty.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Department.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Enrollment.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Function.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -217,13 +205,7 @@
     <Compile Include="Models\OfficeAssignment.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Student.cs" />
-    <Compile Include="OfficeAssignment.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Participant.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Person.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -337,6 +319,7 @@
     <Content Include="Views\Bid\Table.cshtml" />
     <Content Include="Views\Bid\Index.cshtml" />
     <Content Include="Views\Tender\PropertyPartial.cshtml" />
+    <Content Include="Views\Tender\TablePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

@@ -33,7 +33,14 @@
                 <td>@Participant.byId(participant).name</td>
                 @foreach (var property in Model.propertyIds)
                 {
-                <td>@Html.EditorFor(m => Model.bid[participant][property].defaultValue, new { htmlAttributes = new { @class = "form-control", @id = "bid_" + participant + "_" + property } })</td>
+                    <td>
+                        @Html.EditorFor(m => Model.bid[participant][property].defaultValue,
+                      new { htmlAttributes = new { @style = "background-color: #E1FCE8;", @class = "form-control", @id = "bidDefault_" + participant + "_" + property } })
+                    </td>
+                    <td>
+                        @Html.EditorFor(m => Model.bid[participant][property].maxValue,
+                                      new { htmlAttributes = new { @class = "form-control", @style = "background-color: #F1F0F7;", @id = "bidMax_" + participant + "_" + property } })
+                    </td>
                 }
             </tr>
         }
@@ -48,7 +55,7 @@
 <br />
 @section Scripts {
     <script type="text/javascript">
-        function getTable()
+        function getTable(flag)
         {
             var table = {}
             var participants = @Html.Raw(Json.Encode(Model.participantIds))
@@ -57,7 +64,7 @@
             {
                 table[participants[pt]] = {}
                 for (py in properties)
-                    table[participants[pt]][properties[py]] = $('#bid_'+participants[pt]+'_'+properties[py]).val()
+                    table[participants[pt]][properties[py]] = $('#bid'+flag+'_'+participants[pt]+'_'+properties[py]).val()
             }
             return table
         }
@@ -70,7 +77,8 @@
                     data['id'] = ids;
                     data[token.attr('name')] = token.val();
                     data['status'] = 'accept';
-                    data['table'] = JSON.stringify(getTable());
+                    data['def'] = JSON.stringify(getTable('Default'));
+                    data['max'] = JSON.stringify(getTable('Max'));
                     data['tenderId'] = $('#tenderId').val()
                     $.ajax({
                         type: "POST",

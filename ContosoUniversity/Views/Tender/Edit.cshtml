@@ -66,13 +66,22 @@
             </div>
         </div>
 
-        @Html.Partial("PropertyPartial", Property.QueryAll().Where(p => Model.propertyIds.Contains(p.id)).ToList())
-
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Сохранить" class="btn btn-default" />
+            <div class="col-md-10">
+                <input type="submit" value="Сохранить общие данные по тендеру" class="btn btn-success" />
             </div>
         </div>
+
+        @Html.Partial("PropertyPartial", Property.QueryAll().Where(p => Model.propertyIds.Contains(p.id)).ToList())
+
+        @Html.Partial("TablePartial", new BidContainer(Model.id))
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="button" value="Перейти к расчетам" class="btn btn-success" id="calc" />
+            </div>
+        </div>
+
     </div>
 }
 
@@ -83,7 +92,58 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
+        function getTable(flag)
+        {
+            var table = {}
+            var participants = @Html.Raw(Json.Encode(Model.participantIds))
+            var properties = @Html.Raw(Json.Encode(Model.propertyIds))
+            for (pt in participants)
+            {
+                table[participants[pt]] = {}
+                for (py in properties)
+                    table[participants[pt]][properties[py]] = $('#bid'+flag+'_'+participants[pt]+'_'+properties[py]).val()
+            }
+            return table
+        }
+
+
+        function save(id) {
+            data = {}
+            data['id'] = id
+            data['minValue'] = $('#min' + id).val().replace('.', ',')
+            data['maxValue'] = $('#max' + id).val().replace('.', ',')
+            data['importance'] = $('#i' + id).val()
+            data['functionId'] = $('#f' + id).val()
+            data['step'] = $('#s' + id).val().replace('.', ',')
+            var token = $(':input:hidden[name*="RequestVerificationToken"]');
+            data[token.attr('name')] = token.val();
+            data['toMax'] = $('#tm' + id).is(':checked')
+            $.ajax({
+                type: "POST",
+                url: "/Property/Save",
+                data: data,
+            });
+        }
+
         $(document).ready(function() {
+            $('#sbmTbl').click(function () {
+                var ids = [1, 2, 3, 4, 5];
+                var token = $(':input:hidden[name*="RequestVerificationToken"]');
+                var data = {};
+                data['id'] = ids;
+                data[token.attr('name')] = token.val();
+                data['status'] = 'accept';
+                data['def'] = JSON.stringify(getTable('Default'));
+                data['max'] = JSON.stringify(getTable('Max'));
+                data['tenderId'] = $('#tenderId').val()
+                $.ajax({
+                    type: "POST",
+                    url: "/Bid/Table",
+                    data: data,
+                });
+            });
+
+
             $('#participantIds').multiselect({
                 nonSelectedText: 'Выберите участников'
             });
