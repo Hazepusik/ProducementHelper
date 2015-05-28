@@ -64,7 +64,7 @@ namespace ContosoUniversity
         {
             get
             {
-                return Property.QueryAll().Where(p => p.isDefault ?? false)
+                return Property.QueryAll().Where(p => propertyIds.Contains(p.id))
                     .Select(x => new SelectListItem { Value = x.id.ToString(), Text = x.name, }).ToList();
             }
             set { }
@@ -84,6 +84,23 @@ namespace ContosoUniversity
             {
                 return db.Tender.ToList();
             }
+        }
+
+        public void setBids(Dictionary<int, Dictionary<int, double>> bids)
+        {
+            using (ProcurementEntities db = new ProcurementEntities())
+            {
+                List<Bid> bidsToUpdate = db.Bid.Where(b => b.tenderId == this.id 
+                                                        && b.propertyId != null 
+                                                        && propertyIds.Contains(b.propertyId.Value) 
+                                                        && participantIds.Contains(b.participantId)).ToList();
+                foreach (Bid b in bidsToUpdate)
+                {
+                    b.defaultValue = bids[b.participantId][b.propertyId.Value];
+                }
+                db.SaveChanges();
+            }
+            
         }
     }
 

@@ -50,6 +50,30 @@ namespace ContosoUniversity.Controllers
             return View(prop);
         }
 
+        // POST: Property/Save
+        [HttpPost]
+        public ActionResult Save(Property newP)
+        {
+            try
+            {
+                Property oldP = db.Property.First(p => p.id == newP.id);
+                oldP.functionId = newP.functionId;
+                oldP.importance = newP.importance;
+                oldP.maxValue = newP.maxValue;
+                oldP.minValue = newP.minValue;
+                oldP.step = newP.step;
+                oldP.toMax = newP.toMax;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                ModelState.AddModelError("", "Произошла ошибка при сохранении записи. Убедитесь, что все оПри повторении ошибки обратитесь к администратору");
+            }
+            return View();
+        }
+
+
         // POST: Property/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -59,6 +83,7 @@ namespace ContosoUniversity.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    property.isDefault = true;
                     db.Property.Add(property);
                     db.SaveChanges();
                     return RedirectToAction("Index");

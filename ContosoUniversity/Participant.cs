@@ -14,14 +14,7 @@ namespace ContosoUniversity
     
     public partial class Participant
     {
-        public Participant()
-        {
-            this.Bid = new HashSet<Bid>();
-        }
-    
         public int id { get; set; }
         public string name { get; set; }
-    
-        public virtual ICollection<Bid> Bid { get; set; }
     }
 }

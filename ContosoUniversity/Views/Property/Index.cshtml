@@ -22,9 +22,9 @@
         <th>
             Значимость
         </th>
-        <th>
+        <!--<th>
             Является подкритерием
-        </th>
+        </th>-->
         <th></th>
     </tr>
 
@@ -39,9 +39,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.importance)
             </td>
-            <td>
+            <!--<td>
                 @Html.Raw(item.isSubpropertyOf == null ? "-" : Property.byId(item.isSubpropertyOf ?? 0).name)
-            </td>
+            </td>-->
             <td>
                 @Html.ActionLink("Редактировать", "Edit", new { id = item.id }) |
                 @Html.ActionLink("Подробности", "Details", new { id = item.id }) |

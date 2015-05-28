@@ -64,10 +64,9 @@
             </div>
         </div>
 
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Создать" class="btn btn-default" />
+                <input type="submit" value="Далее" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -80,6 +79,26 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
+
+
+        function save(id) {
+            data = {}
+            data['id'] = id
+            data['minValue'] = $('#min' + id).val().replace('.', ',')
+            data['maxValue'] = $('#max' + id).val().replace('.', ',')
+            data['importance'] = $('#i' + id).val()
+            data['functionId'] = $('#f' + id).val()
+            data['step'] = $('#s' + id).val().replace('.', ',')
+            var token = $(':input:hidden[name*="RequestVerificationToken"]');
+            data[token.attr('name')] = token.val();
+            data['toMax'] = $('#tm' + id).is(':checked')
+            $.ajax({
+                type: "POST",
+                url: "/Property/Save",
+                data: data,
+            });
+        }
+
         $(document).ready(function() {
             $('#participantIds').multiselect({
                 nonSelectedText: 'Выберите участников'

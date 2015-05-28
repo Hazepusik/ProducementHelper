@@ -18,10 +18,7 @@ namespace ContosoUniversity
         public int tenderId { get; set; }
         public int participantId { get; set; }
         public Nullable<int> propertyId { get; set; }
-        public Nullable<double> value { get; set; }
-    
-        public virtual Participant Participant { get; set; }
-        public virtual Property Property { get; set; }
-        public virtual Tender Tender { get; set; }
+        public double defaultValue { get; set; }
+        public Nullable<double> maxValue { get; set; }
     }
 }

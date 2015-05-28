@@ -1,44 +1,17 @@
-﻿@model ContosoUniversity.BidContainer
-@using PagedList.Mvc;
-
-@{
-    ViewBag.Title = "Участники";
+﻿@{
+    Layout = null;
 }
 
-<h2>@ViewBag.Title</h2>
+<!DOCTYPE html>
 
-<p>
-    @Html.ActionLink("Создать", "Create")
-</p>
-
-<table class="table table-striped table-hover" id="bids">
-    <tr>
-        <th>11</th>
-        @foreach (var item in Model.properties)
-        {
-            <th>@item</th>
-        }
-    </tr>
-
-        @foreach (var participant in Model.participants)
-        {
-            <tr>
-                <td>@participant</td>
-                @foreach (var property in Model.properties)
-                {
-                <td>@Model.bid[participant][property].value</td>
-                }
-            </tr>
-        }
-
-</table>
-
-
-<br />
-@section Scripts {
-    <script type="text/javascript">
-            $(document).ready(function() {
-                $('#bids').editableTableWidget();
-            });
-    </script>
-    }
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+    
+    </div>
+</body>
+</html>

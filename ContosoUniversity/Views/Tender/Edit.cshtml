@@ -52,8 +52,8 @@
         <div class="form-group">
             @Html.LabelFor(x => x.participants, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.ListBoxFor(x => x.participantIds, Model.participants, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.participantIds, "", new { @class = "text-danger" })
+                @Html.ListBoxFor(x => Model.participantIds, Model.participants, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => Model.participantIds, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -61,10 +61,12 @@
         <div class="form-group">
             @Html.LabelFor(x => x.properties, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.ListBoxFor(x => x.propertyIds, Model.properties, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.propertyIds, "", new { @class = "text-danger" })
+                @Html.ListBoxFor(x => Model.propertyIds, Model.properties, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => Model.propertyIds, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        @Html.Partial("PropertyPartial", Property.QueryAll().Where(p => Model.propertyIds.Contains(p.id)).ToList())
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

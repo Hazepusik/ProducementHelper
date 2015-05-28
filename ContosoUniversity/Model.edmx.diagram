@@ -25,10 +25,7 @@
         <AssociationConnector Association="ProcurementModel.FK_DefaultProperty_Property" />
         <AssociationConnector Association="ProcurementModel.FK_Property_Function" />
         <AssociationConnector Association="ProcurementModel.FK_Property_Property" />
-        <EntityTypeShape EntityType="ProcurementModel.Bid" Width="1.5" PointX="4.875" PointY="11.125" />
-        <AssociationConnector Association="ProcurementModel.FK_Bid_Participant" />
-        <AssociationConnector Association="ProcurementModel.FK_Bid_Property" />
-        <AssociationConnector Association="ProcurementModel.FK_Bid_Tender" />
+        <EntityTypeShape EntityType="ProcurementModel.Bid" Width="1.5" PointX="10.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

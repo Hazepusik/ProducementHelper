@@ -1,0 +1,172 @@
+﻿@model List<ContosoUniversity.Property>
+@{
+    var price = Model.Find(x => x.isPrice == true);
+    var NewModel = Model.Where(m => m.id != price.id);
+}
+
+
+<ul class="list-group">
+    <li class="list-group-item active">
+        <h4 class="list-group-item-heading">
+            Ценовые параметры, важность @Html.Raw(price.importance)
+        </h4>
+        <p class="list-group-item-text">
+        </p>
+    </li>
+    <li class="list-group-item">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Критерий @Html.DisplayFor(modelItem => price.name), важность @Html.DisplayFor(modelItem => price.importance)
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => price.importance, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => price.importance, new { htmlAttributes = new { @class = "form-control", @min = "1", @max = "100", @id = "i"+price.id.ToString() } })
+                                @Html.ValidationMessageFor(model => price.importance, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => price.minValue, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => price.minValue, new { htmlAttributes = new { @class = "form-control", @id = "min" + price.id.ToString() } })
+                                @Html.ValidationMessageFor(model => price.minValue, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => price.maxValue, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => price.maxValue, new { htmlAttributes = new { @class = "form-control", @id = "max" + price.id.ToString() } })
+                                @Html.ValidationMessageFor(model => price.maxValue, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => price.step, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => price.step, new { htmlAttributes = new { @class = "form-control", @id = "s" + price.id.ToString() } })
+                                @Html.ValidationMessageFor(model => price.step, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => price.toMax, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.CheckBoxFor(model => price.toMax, new { @class = "form-control", @id = "tm" + price.id.ToString() })
+                                @Html.ValidationMessageFor(model => price.toMax, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            @Html.Label("Функция аппроксимации", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(m => price.functionId, new SelectList(Function.QueryAll(), "id", "name"), htmlAttributes: new { @class = "form-control", @id = "f" + price.id.ToString() })
+                                @Html.ValidationMessageFor(model => price.functionId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="button" value="Сохранить" onclick="save(@Html.Raw(price.id))" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+
+<ul class="list-group">
+    <li class="list-group-item active">
+        <h4 class="list-group-item-heading">
+            Неценовые параметры, важность @Html.Raw(100 - price.importance)
+        </h4>
+        <p class="list-group-item-text">
+        </p>
+    </li>
+    @foreach (var item in NewModel)
+    {
+        <li class="list-group-item">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#@Html.Raw(item.id)" aria-expanded="true" aria-controls="collapseOne">
+                                Критерий @Html.DisplayFor(modelItem => item.name), важность @Html.DisplayFor(modelItem => item.importance)
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="@Html.Raw(item.id)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                @Html.LabelFor(model => item.importance, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => item.importance, new { htmlAttributes = new { @class = "form-control", @min = "1", @max = "100", @id = "i" + item.id.ToString() } })
+                                    @Html.ValidationMessageFor(model => item.importance, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => item.minValue, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => item.minValue, new { htmlAttributes = new { @class = "form-control", @id = "min" + item.id.ToString() } })
+                                    @Html.ValidationMessageFor(model => item.minValue, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => item.maxValue, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => item.maxValue, new { htmlAttributes = new { @class = "form-control", @id = "max" + item.id.ToString() } })
+                                    @Html.ValidationMessageFor(model => item.maxValue, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => item.step, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => item.step, new { htmlAttributes = new { @class = "form-control", @id = "s" + item.id.ToString() } })
+                                    @Html.ValidationMessageFor(model => item.step, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => item.toMax, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.CheckBoxFor(model => item.toMax, new { @class = "form-control", @id = "tm" + item.id.ToString() })
+                                    @Html.ValidationMessageFor(model => item.toMax, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                @Html.Label("Функция аппроксимации", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(m => item.functionId, new SelectList(Function.QueryAll(), "id", "name"), htmlAttributes: new { @class = "form-control", @id = "f" + item.id.ToString() })
+                                    @Html.ValidationMessageFor(model => item.functionId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="button" value="Сохранить" onclick="save(@Html.Raw(item.id))" class="btn btn-default" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    }
+</ul>

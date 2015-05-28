@@ -100,6 +100,7 @@
     <EntitySetMapping Name="Property">
       <EntityTypeMapping TypeName="ProcurementModel.Property">
         <MappingFragment StoreEntitySet="Property">
+          <ScalarProperty Name="isPrice" ColumnName="isPrice" />
           <ScalarProperty Name="functionId" ColumnName="functionId" />
           <ScalarProperty Name="isDefault" ColumnName="isDefault" />
           <ScalarProperty Name="toMax" ColumnName="toMax" />
@@ -116,7 +117,8 @@
     <EntitySetMapping Name="Bid">
       <EntityTypeMapping TypeName="ProcurementModel.Bid">
         <MappingFragment StoreEntitySet="Bid">
-          <ScalarProperty Name="value" ColumnName="value" />
+          <ScalarProperty Name="maxValue" ColumnName="maxValue" />
+          <ScalarProperty Name="defaultValue" ColumnName="defaultValue" />
           <ScalarProperty Name="propertyId" ColumnName="propertyId" />
           <ScalarProperty Name="participantId" ColumnName="participantId" />
           <ScalarProperty Name="tenderId" ColumnName="tenderId" />

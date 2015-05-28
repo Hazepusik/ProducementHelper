@@ -8,7 +8,8 @@
     <Property Name="tenderId" Type="int" Nullable="false" />
     <Property Name="participantId" Type="int" Nullable="false" />
     <Property Name="propertyId" Type="int" />
-    <Property Name="value" Type="float" />
+    <Property Name="defaultValue" Type="float" Nullable="false" />
+    <Property Name="maxValue" Type="float" />
   </EntityType>
   <EntityType Name="Course">
     <Key>
@@ -101,6 +102,7 @@
     <Property Name="toMax" Type="bit" Nullable="false" />
     <Property Name="isDefault" Type="bit" />
     <Property Name="functionId" Type="int" Nullable="false" />
+    <Property Name="isPrice" Type="bit" />
   </EntityType>
   <EntityType Name="Tender">
     <Key>
@@ -112,48 +114,6 @@
     <Property Name="minPrice" Type="float" />
     <Property Name="maxPrice" Type="float" />
   </EntityType>
-  <Association Name="FK_Bid_Participant">
-    <End Role="Participant" Type="Self.Participant" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Bid" Type="Self.Bid" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Participant">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="Bid">
-        <PropertyRef Name="participantId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Bid_Property">
-    <End Role="Property" Type="Self.Property" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Bid" Type="Self.Bid" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Property">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="Bid">
-        <PropertyRef Name="propertyId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Bid_Tender">
-    <End Role="Tender" Type="Self.Tender" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Bid" Type="Self.Bid" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Tender">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="Bid">
-        <PropertyRef Name="tenderId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_dbo_Course_dbo_Department_DepartmentID">
     <End Role="Department" Type="Self.Department" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -311,18 +271,6 @@
     <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Property" EntityType="Self.Property" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tender" EntityType="Self.Tender" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK_Bid_Participant" Association="Self.FK_Bid_Participant">
-      <End Role="Participant" EntitySet="Participant" />
-      <End Role="Bid" EntitySet="Bid" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Bid_Property" Association="Self.FK_Bid_Property">
-      <End Role="Property" EntitySet="Property" />
-      <End Role="Bid" EntitySet="Bid" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Bid_Tender" Association="Self.FK_Bid_Tender">
-      <End Role="Tender" EntitySet="Tender" />
-      <End Role="Bid" EntitySet="Bid" />
-    </AssociationSet>
     <AssociationSet Name="FK_dbo_Course_dbo_Department_DepartmentID" Association="Self.FK_dbo_Course_dbo_Department_DepartmentID">
       <End Role="Department" EntitySet="Department" />
       <End Role="Course" EntitySet="Course" />

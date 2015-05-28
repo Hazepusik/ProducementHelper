@@ -17,7 +17,9 @@ namespace ContosoUniversity.Controllers
     public class TenderController : Controller
     {
         private ProcurementEntities db = new ProcurementEntities();
-        
+
+
+
         // GET: Tender
         public ViewResult Index(string sortOrder, int? page)
         {
@@ -65,20 +67,27 @@ namespace ContosoUniversity.Controllers
                         Bid bid = new Bid();
                         bid.tenderId = tender.id;
                         bid.participantId = participantId;
+                        bid.defaultValue = 0;
                         db.Bid.Add(bid);
                     }
                     db.SaveChanges();
+
                     foreach (int propertyId in tender.propertyIds)
+                    {
+                        Property property = Property.byId(propertyId).Clone();
+                        //db.SaveChanges();
                         foreach (int participantId in tender.participantIds)
                         {
                             Bid bid = new Bid();
                             bid.tenderId = tender.id;
                             bid.participantId = participantId;
-                            bid.propertyId = propertyId;
+                            bid.propertyId = property.id;
+                            bid.defaultValue = 0;
                             db.Bid.Add(bid);
                         }
+                    }
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Edit", new { id = tender.id });
                 }
             }
             catch (RetryLimitExceededException)// dex)
@@ -102,7 +111,7 @@ namespace ContosoUniversity.Controllers
             {
                 return HttpNotFound();
             }
-            return View(Tender);
+            return RedirectToAction("Edit", new { id = id });
         }
 
         // POST: Tender/Edit/5

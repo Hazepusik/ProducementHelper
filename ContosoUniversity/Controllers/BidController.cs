@@ -10,6 +10,7 @@ using ContosoUniversity.DAL;
 using ContosoUniversity.Models;
 using PagedList;
 using System.Data.Entity.Infrastructure;
+using Newtonsoft.Json;
 
 
 namespace ContosoUniversity.Controllers
@@ -19,39 +20,42 @@ namespace ContosoUniversity.Controllers
         private ProcurementEntities db = new ProcurementEntities();
 
         // GET: Bid
-        public ViewResult Index(int? _tenderId)
-        {
-            return View(new BidContainer(_tenderId));
-        }
-
-
-        // GET: Participant/Create
-        public ActionResult Create()
+        public ViewResult Index()
         {
             return View();
         }
 
-        // POST: Participant/Create
+
+        // GET: Bid/Table
+        public ActionResult Table(int? _tenderId)
+        {
+            _tenderId = Tender.QueryAll().First().id;
+            return View(new BidContainer(_tenderId));
+        }
+
+        // POST: Bid/Table
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "name")]Participant participant)
+        public ActionResult Table(string table, int tenderId)
         {
+            
             try
             {
-                if (ModelState.IsValid)
-                {
-                    db.Participant.Add(participant);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
+                Dictionary<int, Dictionary<int, double>> bids = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, double>>>(table);
+                Tender.byId(tenderId).setBids(bids);
+                db.SaveChanges();
+                return View("Tender", Tender.byId(tenderId));
+
             }
-            catch (RetryLimitExceededException)// dex)
+            catch //(RetryLimitExceededException)// dex)
             {
                 
                 //Log the error (uncomment dex variable name and add a line here to write a log.
                 ModelState.AddModelError("", "Произошла ошибка при сохранении записи. При повторении ошибки обратитесь к администратору");
+                return View("Error");
             }
-            return View(participant);
+            return View();
         }
 
         // GET: Participant/Edit/5
