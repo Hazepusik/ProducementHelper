@@ -18,6 +18,7 @@ namespace ContosoUniversity
         public ProcurementEntities()
             : base("name=ProcurementEntities")
         {
+            this.Configuration.ProxyCreationEnabled = false; 
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

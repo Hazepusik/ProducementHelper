@@ -148,11 +148,9 @@ namespace ContosoUniversity.Controllers
 
                     propToAdd = propToAdd.Concat(oldProperties.Where(op => !propToRm.Contains(op))).Distinct().ToList();
                     partToAdd = partToAdd.Concat(oldParticipants.Where(op => !partToRm.Contains(op))).Distinct().ToList();
-                    // TODO: говно, надо отладить
+
                     foreach (int pyId in propToAdd)
                     {
-
-                       //int propId = TenderToUpdate.propertyIds.Contains(pyId) ? pyId : Property.byId(pyId).Clone().id;
                         foreach (int ptId in partToAdd)
                         {
                             if (db.Bid.FirstOrDefault(b => b.participantId == ptId &&
@@ -169,7 +167,6 @@ namespace ContosoUniversity.Controllers
                         }
                     }
                     db.SaveChanges();
-                    // TODO: change tender bids
                     return RedirectToAction("Edit", new { id = id });
                 }
                 catch (RetryLimitExceededException)// dex )

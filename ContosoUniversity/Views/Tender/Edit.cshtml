@@ -127,7 +127,7 @@
 
         $(document).ready(function() {
             $('#sbmTbl').click(function () {
-                // TODO: add check data
+                // TODO: add check data sum = 100
                 var token = $(':input:hidden[name*="RequestVerificationToken"]');
                 var data = {};
                 data[token.attr('name')] = token.val();

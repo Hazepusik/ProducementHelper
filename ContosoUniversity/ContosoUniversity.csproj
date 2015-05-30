@@ -125,6 +125,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap-multiselect.css" />
     <Content Include="Models\Msg.cs" />
+    <Content Include="App_Code\Calculation.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -322,7 +323,6 @@
     <Content Include="Views\Tender\TablePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
