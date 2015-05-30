@@ -80,3 +80,5 @@ D:\ProducementHelper\ProducementHelper\ContosoUniversity\obj\Debug\ContosoUniver
 D:\ProducementHelper\ProducementHelper\ContosoUniversity\obj\Debug\ContosoUniversity.csproj.GenerateResource.Cache
 D:\ProducementHelper\ProducementHelper\ContosoUniversity\obj\Debug\ContosoUniversity.dll
 D:\ProducementHelper\ProducementHelper\ContosoUniversity\obj\Debug\ContosoUniversity.pdb
+D:\ProducementHelper\ProducementHelper\ContosoUniversity\bin\EPPlus.dll
+D:\ProducementHelper\ProducementHelper\ContosoUniversity\bin\EPPlus.xml

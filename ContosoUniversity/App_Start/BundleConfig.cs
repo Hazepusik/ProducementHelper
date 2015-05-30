@@ -23,7 +23,8 @@ namespace ContosoUniversity
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/bootstrap-multiselect.js",
                       "~/Scripts/respond.js",
-                      "~/Scripts/mindmup-editabletable.js"));
+                      "~/Scripts/mindmup-editabletable.js",
+                      "~/Scripts/d3/d3.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap-multiselect.css",

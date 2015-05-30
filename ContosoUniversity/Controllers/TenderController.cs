@@ -193,6 +193,22 @@ namespace ContosoUniversity.Controllers
             return View(Tender);
         }
 
+
+        // GET: Tender/Result/5
+        public ActionResult Result(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Tender Tender = db.Tender.Find(id);
+            if (Tender == null)
+            {
+                return HttpNotFound();
+            }
+            return View(Tender);
+        }
+
         // GET: Tender/Delete/5
         public ActionResult Delete(int? id, bool? saveChangesError = false)
         {

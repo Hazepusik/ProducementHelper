@@ -1,0 +1,116 @@
+﻿@model ContosoUniversity.Tender
+
+@{
+    ViewBag.Title = "Итоги";
+    Calculation calc = new Calculation(Model);
+    double optimal = calc.calcOptimalPrice();
+    calc.generateXlsx();
+}
+
+<style>
+    /* set the CSS */
+
+    body {
+        font: 12px Arial;
+    }
+
+    path {
+        stroke: steelblue;
+        stroke-width: 2;
+        fill: none;
+    }
+
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: grey;
+        stroke-width: 1;
+        shape-rendering: crispEdges;
+    }
+</style>
+
+<h2>Итоги по тендеру @Html.Raw(Model.name)</h2>
+
+<div>
+    <hr />
+    <h4>
+        Оптимальная цена тендера для выигрыша с минимальными значениями составляет @Html.Raw(optimal) рублей.
+        <br /><br />
+        Зависимость вероятности выигрыша от ставки для заданного диапазона:
+    </h4>
+    <div id="graph"></div>
+</div>
+<p>
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Назад", "Index")
+</p>
+
+@section Scripts {
+<script>
+    function generateSVG(data) {
+        $('svg').remove(); // удаляем предыдущий график
+        // Set the dimensions of the canvas / graph
+        var margin = { top: 20, right: 150, bottom: 30, left: 60 },
+            width = 1000 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
+
+
+        // Set the ranges
+        var x = d3.scale.linear().range([0, width]);
+        var y = d3.scale.linear().range([height, 0]);
+
+        // Define the axes
+        var xAxis = d3.svg.axis().scale(x)
+            .orient("bottom").ticks(5);
+
+        var yAxis = d3.svg.axis().scale(y)
+            .orient("left").ticks(5);
+
+        // Define the line
+        var valueline = d3.svg.line()
+            .x(function (d) { return x(d.price); })
+            .y(function (d) { return y(d.percent); });
+
+        // Adds the svg canvas
+        var svg = d3.select("#graph")
+            .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+                .attr("transform",
+                      "translate(" + margin.left + "," + margin.top + ")");
+
+        // Get the data
+        data.forEach(function (d) {
+            d.percent = +d.percent;
+        });
+
+        // Scale the range of the data
+        x.domain(d3.extent(data, function (d) { return d.price; }));
+        y.domain([0, d3.max(data, function (d) { return d.percent; })]);
+
+        // Add the valueline path.
+        svg.append("path")
+            .attr("class", "line")
+            .attr("d", valueline(data));
+
+        // Add the X Axis
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+
+        // Add the Y Axis
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis);
+
+    }
+
+    $(document).ready(function () {
+        data = [{ "price": 100000, "percent": 10 }, { "price": 200000, "percent": 20 }]
+        generateSVG(data)
+    });
+
+</script>
+}
