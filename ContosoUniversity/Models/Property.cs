@@ -34,6 +34,12 @@ namespace ContosoUniversity
             }
         }
 
+        public static List<Property> QueryAllDefault()
+        {
+                return Property.QueryAll().Where(p => p.isDefault ?? false).ToList();
+
+        }
+
         public Property Clone()
         {
             Property property = new Property();

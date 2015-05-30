@@ -69,7 +69,7 @@
                         <div class="form-group">
                             @Html.Label("Функция аппроксимации", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.DropDownListFor(m => price.functionId, new SelectList(Function.QueryAll(), "id", "name"), htmlAttributes: new { @class = "form-control", @id = "f" + price.id.ToString() })
+                                @Html.DropDownListFor(m => price.functionId, Function.ToSelectList(price.functionId), htmlAttributes: new { @class = "form-control", @id = "f" + price.id.ToString() })
                                 @Html.ValidationMessageFor(model => price.functionId, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -152,7 +152,7 @@
                             <div class="form-group">
                                 @Html.Label("Функция аппроксимации", htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.DropDownListFor(m => item.functionId, new SelectList(Function.QueryAll(), "id", "name"), htmlAttributes: new { @class = "form-control", @id = "f" + item.id.ToString() })
+                                    @Html.DropDownListFor(m => item.functionId, Function.ToSelectList(item.functionId), htmlAttributes: new { @class = "form-control", @id = "f" + item.id.ToString() })
                                     @Html.ValidationMessageFor(model => item.functionId, "", new { @class = "text-danger" })
                                 </div>
                             </div>

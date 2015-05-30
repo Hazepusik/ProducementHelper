@@ -9,6 +9,16 @@ namespace ContosoUniversity
     [MetadataType(typeof(TenderMetaData))]
     public partial class Tender
     {
+
+        public List<int> GetDefaultPropIds()
+        {
+            List<Property> defProp = Property.QueryAllDefault();
+            IEnumerable<string> existNames = Property.QueryAll().Where(pp => propertyIds.Contains(pp.id)).Select(pp => pp.name);
+            List<int> addIds = defProp.Where(dp => !existNames.Contains(dp.name)).Select(p => p.id).ToList();
+            addIds.AddRange(propertyIds);
+            return addIds;
+        }
+
         private List<int> _participantIds = null;
         public List<int> participantIds
         {
@@ -64,7 +74,7 @@ namespace ContosoUniversity
         {
             get
             {
-                return Property.QueryAll().Where(p => propertyIds.Contains(p.id))
+                return Property.QueryAll().Where(p => GetDefaultPropIds().Contains(p.id))
                     .Select(x => new SelectListItem { Value = x.id.ToString(), Text = x.name, }).ToList();
             }
             set { }

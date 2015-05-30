@@ -127,10 +127,9 @@
 
         $(document).ready(function() {
             $('#sbmTbl').click(function () {
-                var ids = [1, 2, 3, 4, 5];
+                // TODO: add check data
                 var token = $(':input:hidden[name*="RequestVerificationToken"]');
                 var data = {};
-                data['id'] = ids;
                 data[token.attr('name')] = token.val();
                 data['status'] = 'accept';
                 data['def'] = JSON.stringify(getTable('Default'));
@@ -142,7 +141,6 @@
                     data: data,
                 });
             });
-
 
             $('#participantIds').multiselect({
                 nonSelectedText: 'Выберите участников'

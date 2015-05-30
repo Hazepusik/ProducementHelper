@@ -76,7 +76,7 @@
         <div class="form-group">
             @Html.Label("Функция аппроксимации", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(m => m.functionId, new SelectList(Function.QueryAll(), "id", "name"), htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.functionId, Function.ToSelectList(Model.functionId), htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.functionId, "", new { @class = "text-danger" })
             </div>
         </div>

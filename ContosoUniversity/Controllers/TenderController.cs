@@ -124,10 +124,50 @@ namespace ContosoUniversity.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Tender TenderToUpdate = db.Tender.Find(id);
+            List<int> oldParticipants = TenderToUpdate.participantIds;
+            List<int> oldProperties = TenderToUpdate.propertyIds;
             if (TryUpdateModel(TenderToUpdate, "", new string[] { "name", "description", "minPrice", "maxPrice", "participantIds", "propertyIds" }))
             {
                 try
                 {
+                    db.SaveChanges();
+                    List<int> propToRm = oldProperties.Except(TenderToUpdate.propertyIds).ToList();
+                    List<int> propToAdd = TenderToUpdate.propertyIds.Except(oldProperties).ToList();
+                    List<int> partToRm = oldParticipants.Except(TenderToUpdate.participantIds).ToList();
+                    List<int> partToAdd = TenderToUpdate.participantIds.Except(oldParticipants).ToList();
+
+                    List<Bid> bidsToRm = db.Bid.Where(b => partToRm.Contains(b.participantId)
+                                                            || propToRm.Contains(b.propertyId ?? 0)).ToList();
+                    db.Bid.RemoveRange(bidsToRm);
+                    db.SaveChanges();
+
+                    for (int cnt = 0; cnt < propToAdd.Count(); ++cnt )
+                    {
+                        propToAdd[cnt] = Property.byId(propToAdd[cnt]).Clone().id;
+                    }
+
+                    propToAdd = propToAdd.Concat(oldProperties.Where(op => !propToRm.Contains(op))).Distinct().ToList();
+                    partToAdd = partToAdd.Concat(oldParticipants.Where(op => !partToRm.Contains(op))).Distinct().ToList();
+                    // TODO: говно, надо отладить
+                    foreach (int pyId in propToAdd)
+                    {
+
+                       //int propId = TenderToUpdate.propertyIds.Contains(pyId) ? pyId : Property.byId(pyId).Clone().id;
+                        foreach (int ptId in partToAdd)
+                        {
+                            if (db.Bid.FirstOrDefault(b => b.participantId == ptId &&
+                                                    b.propertyId == pyId &&
+                                                    b.tenderId == TenderToUpdate.id) == null)
+                            {
+                                Bid bid = new Bid();
+                                bid.tenderId = TenderToUpdate.id;
+                                bid.participantId = ptId;
+                                bid.propertyId = pyId;
+                                bid.defaultValue = 0;
+                                db.Bid.Add(bid);
+                            }
+                        }
+                    }
                     db.SaveChanges();
                     // TODO: change tender bids
                     return RedirectToAction("Edit", new { id = id });

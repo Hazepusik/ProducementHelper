@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace ContosoUniversity
 {
@@ -23,6 +24,21 @@ namespace ContosoUniversity
             {
                 return db.Function.ToList();
             }
+        }
+
+        public static List<SelectListItem> ToSelectList(int selected)
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            foreach (Function f in QueryAll())
+            {
+                list.Add(new SelectListItem
+                {
+                    Value = f.id.ToString(),
+                    Text = f.name,
+                    Selected = f.id == selected
+                });
+            }
+            return list;
         }
     }
 
