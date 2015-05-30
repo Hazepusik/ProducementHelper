@@ -11,6 +11,11 @@ namespace ContosoUniversity
     {
         private Tender tender;
 
+        private int oursParticipantId
+        {
+            get { return participants.First(p => p.isOurs ?? false).id; }
+    }
+
         private Property _priceProperty = null;
         private Property priceProperty
         {
@@ -23,7 +28,7 @@ namespace ContosoUniversity
         }
 
         private Dictionary<int, Dictionary<int, double>> _nonpriceResults = null;
-        private double getNonPriceResults(Participant Participant, Property Property)
+        private double getNonPriceResult(Participant Participant, Property Property)
         {
             if (_nonpriceResults == null)
             {
@@ -56,6 +61,7 @@ namespace ContosoUniversity
         {
             if (_priceResults == null)
             {
+                _priceResults = new Dictionary<int, double>();
                 foreach (Participant p in participants)
                 {
                     if (minPropValue(priceProperty) > 0)
@@ -131,13 +137,37 @@ namespace ContosoUniversity
         public Calculation(Tender _tender)
         {
             tender = _tender;
-            calcResults();
+            calcFinalScore();
         }
 
-        private void calcResults()
+
+        private void resetData()
         {
-            //getPriceResult();
-            //getNonPriceResults();
+            _nonpriceResults = null;
+            _priceResults = null;
+            _minPropValue = new Dictionary<int, double?>();
+            _maxPropValue = new Dictionary<int, double?>();
+        }
+
+        private Dictionary<int, double> calcFinalScore()
+        {
+            resetData();
+            Dictionary<int, double> finalScore =new Dictionary<int, double>();
+            foreach (Participant part in participants)
+            {
+                double score = 0;            
+                foreach (Property prop in properties.Where(p => !(p.isPrice ?? false)))
+                {
+                    score += getNonPriceResult(part, prop) * prop.importance / 100;
+                }
+                finalScore[part.id] = (score * (100 - priceProperty.importance) + getPriceResult(part) * priceProperty.importance) / 100;
+            }
+            return finalScore;
+        }
+
+        private void calcOptimalPrice()
+        {
+            
         }
 
 
