@@ -6,15 +6,15 @@
         <th></th>
         @foreach (var item in Model.propertyIds)
         {
-            <th colspan="2">@Property.byId(item).name</th>
+            <th colspan="2">|<div align="center">@Property.byId(item).name</div>|</th>
         }
     </tr>
     <tr>
         <th></th>
         @foreach (var item in Model.propertyIds)
         {
-            <th>Минимум (по умолчанию)</th>
-            <th>Максимум (необязательно)</th>
+            <th><div align="center"><abbr title="Значение по умолчанию для всех расчетов">Минимум</abbr></div></th>
+            <th><div style="max-width:150px;" align="center"><abbr title="Необязательное значение, используется для прогнозирования графика цены">Максимум</abbr></div></th>
         }
     </tr>
 
