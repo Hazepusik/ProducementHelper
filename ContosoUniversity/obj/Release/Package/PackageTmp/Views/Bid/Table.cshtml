@@ -1,0 +1,91 @@
+﻿@model ContosoUniversity.BidContainer
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Участники";
+}
+
+<h2>@ViewBag.Title</h2>
+
+    @Html.AntiForgeryToken()
+
+<table class="table table-striped table-hover" id="bids">
+    @Html.HiddenFor(m => m.tenderId)
+    <tr>
+        <th></th>
+        @foreach (var item in Model.propertyIds)
+        {
+            <th colspan="2">@Property.byId(item).name</th>
+        }
+    </tr>
+    <tr>
+        <th></th>
+        @foreach (var item in Model.propertyIds)
+        {
+            <th>Минимум (по умолчанию)</th>
+            <th>Максимум (необязательно)</th>
+        }
+    </tr>
+
+        @foreach (var participant in Model.participantIds)
+        {
+            <tr>
+                <td>@Participant.byId(participant).name</td>
+                @foreach (var property in Model.propertyIds)
+                {
+                    <td>
+                        @Html.EditorFor(m => Model.bid[participant][property].defaultValue,
+                      new { htmlAttributes = new { @style = "background-color: #E1FCE8;", @class = "form-control", @id = "bidDefault_" + participant + "_" + property } })
+                    </td>
+                    <td>
+                        @Html.EditorFor(m => Model.bid[participant][property].maxValue,
+                                      new { htmlAttributes = new { @class = "form-control", @style = "background-color: #F1F0F7;", @id = "bidMax_" + participant + "_" + property } })
+                    </td>
+                }
+            </tr>
+        }
+
+</table>
+
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Сохранить" id="submit" class="btn btn-default" />
+    </div>
+
+
+<br />
+@section Scripts {
+    <script type="text/javascript">
+        function getTable(flag)
+        {
+            var table = {}
+            var participants = @Html.Raw(Json.Encode(Model.participantIds))
+            var properties = @Html.Raw(Json.Encode(Model.propertyIds))
+            for (pt in participants)
+            {
+                table[participants[pt]] = {}
+                for (py in properties)
+                    table[participants[pt]][properties[py]] = $('#bid'+flag+'_'+participants[pt]+'_'+properties[py]).val()
+            }
+            return table
+        }
+
+            $(document).ready(function() {
+                $('#submit').click(function () {
+                    var ids = [1, 2, 3, 4, 5];
+                    var token = $(':input:hidden[name*="RequestVerificationToken"]');
+                    var data = {};
+                    data['id'] = ids;
+                    data[token.attr('name')] = token.val();
+                    data['status'] = 'accept';
+                    data['def'] = JSON.stringify(getTable('Default'));
+                    data['max'] = JSON.stringify(getTable('Max'));
+                    data['tenderId'] = $('#tenderId').val()
+                    $.ajax({
+                        type: "POST",
+                        url: "/Bid/Table",
+                        data: data,
+                    });
+                });
+            });
+    </script>
+    }

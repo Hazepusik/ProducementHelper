@@ -1,0 +1,49 @@
+﻿@model PagedList.IPagedList<ContosoUniversity.Participant>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Участники";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Создать", "Create")
+</p>
+<!-- Search
+    @using (Html.BeginForm("Index", "Participant", FormMethod.Get)) { <p> Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string) <input type="submit" value="Search" /> </p> }
+-->
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Имя", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th></th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+                @Html.HiddenFor(modelItem => item.id)
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Подробности", "Details", new { id = item.id }) |
+                @if (!(item.isOurs ?? false))
+                {
+                    @Html.ActionLink("Удалить", "Delete", new { id = item.id })
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort }))

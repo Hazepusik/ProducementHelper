@@ -135,20 +135,11 @@
     <Compile Include="Bid.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\CourseController.cs" />
-    <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\InstructorController.cs" />
     <Compile Include="Controllers\BidController.cs" />
     <Compile Include="Controllers\TenderController.cs" />
     <Compile Include="Controllers\PropertyController.cs" />
     <Compile Include="Controllers\ParticipantController.cs" />
-    <Compile Include="Controllers\StudentController.cs" />
-    <Compile Include="DAL\SchoolConfiguration.cs" />
-    <Compile Include="DAL\SchoolContext.cs" />
-    <Compile Include="DAL\SchoolInitializer.cs" />
-    <Compile Include="DAL\SchoolInterceptorLogging.cs" />
-    <Compile Include="DAL\SchoolInterceptorTransientErrors.cs" />
     <Compile Include="Function.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -157,31 +148,6 @@
     </Compile>
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\Logger.cs" />
-    <Compile Include="Migrations\201411021828194_InitialCreate.cs" />
-    <Compile Include="Migrations\201411021828194_InitialCreate.Designer.cs">
-      <DependentUpon>201411021828194_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411021834484_MaxLengthOnNames.cs" />
-    <Compile Include="Migrations\201411021834484_MaxLengthOnNames.Designer.cs">
-      <DependentUpon>201411021834484_MaxLengthOnNames.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411021841373_ComplexDataModel.cs" />
-    <Compile Include="Migrations\201411021841373_ComplexDataModel.Designer.cs">
-      <DependentUpon>201411021841373_ComplexDataModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411021957458_DepartmentSP.cs" />
-    <Compile Include="Migrations\201411021957458_DepartmentSP.Designer.cs">
-      <DependentUpon>201411021957458_DepartmentSP.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411022009135_RowVersion.cs" />
-    <Compile Include="Migrations\201411022009135_RowVersion.Designer.cs">
-      <DependentUpon>201411022009135_RowVersion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411022351064_Inheritance.cs" />
-    <Compile Include="Migrations\201411022351064_Inheritance.Designer.cs">
-      <DependentUpon>201411022351064_Inheritance.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -202,13 +168,6 @@
     <Compile Include="Models\Tender.cs" />
     <Compile Include="Models\Property.cs" />
     <Compile Include="Models\Participiant.cs" />
-    <Compile Include="Models\Course.cs" />
-    <Compile Include="Models\Department.cs" />
-    <Compile Include="Models\Enrollment.cs" />
-    <Compile Include="Models\Instructor.cs" />
-    <Compile Include="Models\OfficeAssignment.cs" />
-    <Compile Include="Models\Person.cs" />
-    <Compile Include="Models\Student.cs" />
     <Compile Include="Participant.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -219,9 +178,6 @@
     <Compile Include="Tender.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\AssignedCourseData.cs" />
-    <Compile Include="ViewModels\EnrollmentDateGroup.cs" />
-    <Compile Include="ViewModels\InstructorIndexData.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -255,6 +211,7 @@
     <Content Include="Scripts\d3\d3.js" />
     <Content Include="Scripts\d3\d3.min.js" />
     <Content Include="Scripts\d3\LICENSE" />
+    <None Include="Properties\PublishProfiles\dev.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -268,7 +225,9 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\mindmup-editabletable.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -283,27 +242,6 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Student\Create.cshtml" />
-    <Content Include="Views\Student\Delete.cshtml" />
-    <Content Include="Views\Student\Details.cshtml" />
-    <Content Include="Views\Student\Edit.cshtml" />
-    <Content Include="Views\Student\Index.cshtml" />
-    <Content Include="Views\Course\Create.cshtml" />
-    <Content Include="Views\Course\Delete.cshtml" />
-    <Content Include="Views\Course\Details.cshtml" />
-    <Content Include="Views\Course\Edit.cshtml" />
-    <Content Include="Views\Course\Index.cshtml" />
-    <Content Include="Views\Instructor\Create.cshtml" />
-    <Content Include="Views\Instructor\Delete.cshtml" />
-    <Content Include="Views\Instructor\Details.cshtml" />
-    <Content Include="Views\Instructor\Edit.cshtml" />
-    <Content Include="Views\Instructor\Index.cshtml" />
-    <Content Include="Views\Department\Create.cshtml" />
-    <Content Include="Views\Department\Delete.cshtml" />
-    <Content Include="Views\Department\Details.cshtml" />
-    <Content Include="Views\Department\Edit.cshtml" />
-    <Content Include="Views\Department\Index.cshtml" />
-    <Content Include="Views\Course\UpdateCourseCredits.cshtml" />
     <Content Include="Views\Participant\Index.cshtml" />
     <Content Include="Views\Participant\Create.cshtml" />
     <Content Include="Views\Participant\Edit.cshtml" />
@@ -328,6 +266,7 @@
     <Content Include="Views\Tender\PropertyPartial.cshtml" />
     <Content Include="Views\Tender\TablePartial.cshtml" />
     <Content Include="Views\Tender\Result.cshtml" />
+    <Content Include="Views\Tender\ResultIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -338,26 +277,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201411021828194_InitialCreate.resx">
-      <DependentUpon>201411021828194_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411021834484_MaxLengthOnNames.resx">
-      <DependentUpon>201411021834484_MaxLengthOnNames.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411021841373_ComplexDataModel.resx">
-      <DependentUpon>201411021841373_ComplexDataModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411021957458_DepartmentSP.resx">
-      <DependentUpon>201411021957458_DepartmentSP.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411022009135_RowVersion.resx">
-      <DependentUpon>201411022009135_RowVersion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411022351064_Inheritance.resx">
-      <DependentUpon>201411022351064_Inheritance.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

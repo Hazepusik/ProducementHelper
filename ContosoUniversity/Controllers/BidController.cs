@@ -6,8 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using ContosoUniversity.DAL;
-using ContosoUniversity.Models;
 using PagedList;
 using System.Data.Entity.Infrastructure;
 using Newtonsoft.Json;

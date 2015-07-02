@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ProcurementModelStoreContainer" CdmEntityContainer="ProcurementEntities">
+    <EntitySetMapping Name="Bid">
+      <EntityTypeMapping TypeName="ProcurementModel.Bid">
+        <MappingFragment StoreEntitySet="Bid">
+          <ScalarProperty Name="maxValue" ColumnName="maxValue" />
+          <ScalarProperty Name="defaultValue" ColumnName="defaultValue" />
+          <ScalarProperty Name="propertyId" ColumnName="propertyId" />
+          <ScalarProperty Name="participantId" ColumnName="participantId" />
+          <ScalarProperty Name="tenderId" ColumnName="tenderId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Function">
+      <EntityTypeMapping TypeName="ProcurementModel.Function">
+        <MappingFragment StoreEntitySet="Function">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Participant">
+      <EntityTypeMapping TypeName="ProcurementModel.Participant">
+        <MappingFragment StoreEntitySet="Participant">
+          <ScalarProperty Name="isOurs" ColumnName="isOurs" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Property">
+      <EntityTypeMapping TypeName="ProcurementModel.Property">
+        <MappingFragment StoreEntitySet="Property">
+          <ScalarProperty Name="isPrice" ColumnName="isPrice" />
+          <ScalarProperty Name="functionId" ColumnName="functionId" />
+          <ScalarProperty Name="isDefault" ColumnName="isDefault" />
+          <ScalarProperty Name="toMax" ColumnName="toMax" />
+          <ScalarProperty Name="step" ColumnName="step" />
+          <ScalarProperty Name="maxValue" ColumnName="maxValue" />
+          <ScalarProperty Name="minValue" ColumnName="minValue" />
+          <ScalarProperty Name="isSubpropertyOf" ColumnName="isSubpropertyOf" />
+          <ScalarProperty Name="importance" ColumnName="importance" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tender">
+      <EntityTypeMapping TypeName="ProcurementModel.Tender">
+        <MappingFragment StoreEntitySet="Tender">
+          <ScalarProperty Name="maxPrice" ColumnName="maxPrice" />
+          <ScalarProperty Name="minPrice" ColumnName="minPrice" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

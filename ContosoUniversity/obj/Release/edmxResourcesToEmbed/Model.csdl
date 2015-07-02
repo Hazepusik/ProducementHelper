@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProcurementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="ProcurementEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Bid" EntityType="ProcurementModel.Bid" />
+    <EntitySet Name="Function" EntityType="ProcurementModel.Function" />
+    <EntitySet Name="Participant" EntityType="ProcurementModel.Participant" />
+    <EntitySet Name="Property" EntityType="ProcurementModel.Property" />
+    <EntitySet Name="Tender" EntityType="ProcurementModel.Tender" />
+    <AssociationSet Name="FK_Bid_Participant" Association="ProcurementModel.FK_Bid_Participant">
+      <End Role="Participant" EntitySet="Participant" />
+      <End Role="Bid" EntitySet="Bid" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Bid_Property" Association="ProcurementModel.FK_Bid_Property">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="Bid" EntitySet="Bid" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Bid_Tender" Association="ProcurementModel.FK_Bid_Tender">
+      <End Role="Tender" EntitySet="Tender" />
+      <End Role="Bid" EntitySet="Bid" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Property_Function" Association="ProcurementModel.FK_Property_Function">
+      <End Role="Function" EntitySet="Function" />
+      <End Role="Property" EntitySet="Property" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Property_Property" Association="ProcurementModel.FK_Property_Property">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="Property1" EntitySet="Property" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Bid">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tenderId" Type="Int32" Nullable="false" />
+    <Property Name="participantId" Type="Int32" Nullable="false" />
+    <Property Name="propertyId" Type="Int32" />
+    <Property Name="defaultValue" Type="Double" Nullable="false" />
+    <Property Name="maxValue" Type="Double" />
+    <NavigationProperty Name="Participant" Relationship="ProcurementModel.FK_Bid_Participant" FromRole="Bid" ToRole="Participant" />
+    <NavigationProperty Name="Property" Relationship="ProcurementModel.FK_Bid_Property" FromRole="Bid" ToRole="Property" />
+    <NavigationProperty Name="Tender" Relationship="ProcurementModel.FK_Bid_Tender" FromRole="Bid" ToRole="Tender" />
+  </EntityType>
+  <EntityType Name="Function">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Property" Relationship="ProcurementModel.FK_Property_Function" FromRole="Function" ToRole="Property" />
+  </EntityType>
+  <EntityType Name="Participant">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="isOurs" Type="Boolean" />
+    <NavigationProperty Name="Bid" Relationship="ProcurementModel.FK_Bid_Participant" FromRole="Participant" ToRole="Bid" />
+  </EntityType>
+  <EntityType Name="Property">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="importance" Type="Int32" Nullable="false" />
+    <Property Name="isSubpropertyOf" Type="Int32" />
+    <Property Name="minValue" Type="Double" />
+    <Property Name="maxValue" Type="Double" />
+    <Property Name="step" Type="Double" />
+    <Property Name="toMax" Type="Boolean" Nullable="false" />
+    <Property Name="isDefault" Type="Boolean" />
+    <Property Name="functionId" Type="Int32" Nullable="false" />
+    <Property Name="isPrice" Type="Boolean" />
+    <NavigationProperty Name="Bid" Relationship="ProcurementModel.FK_Bid_Property" FromRole="Property" ToRole="Bid" />
+    <NavigationProperty Name="Function" Relationship="ProcurementModel.FK_Property_Function" FromRole="Property" ToRole="Function" />
+    <NavigationProperty Name="Property1" Relationship="ProcurementModel.FK_Property_Property" FromRole="Property" ToRole="Property1" />
+    <NavigationProperty Name="Property2" Relationship="ProcurementModel.FK_Property_Property" FromRole="Property1" ToRole="Property" />
+  </EntityType>
+  <EntityType Name="Tender">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="minPrice" Type="Double" />
+    <Property Name="maxPrice" Type="Double" />
+    <NavigationProperty Name="Bid" Relationship="ProcurementModel.FK_Bid_Tender" FromRole="Tender" ToRole="Bid" />
+  </EntityType>
+  <Association Name="FK_Bid_Participant">
+    <End Type="ProcurementModel.Participant" Role="Participant" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="ProcurementModel.Bid" Role="Bid" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Participant">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Bid">
+        <PropertyRef Name="participantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Bid_Property">
+    <End Type="ProcurementModel.Property" Role="Property" Multiplicity="0..1" />
+    <End Type="ProcurementModel.Bid" Role="Bid" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Bid">
+        <PropertyRef Name="propertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Bid_Tender">
+    <End Type="ProcurementModel.Tender" Role="Tender" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="ProcurementModel.Bid" Role="Bid" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tender">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Bid">
+        <PropertyRef Name="tenderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Property_Function">
+    <End Type="ProcurementModel.Function" Role="Function" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="ProcurementModel.Property" Role="Property" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Function">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Property">
+        <PropertyRef Name="functionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Property_Property">
+    <End Type="ProcurementModel.Property" Role="Property" Multiplicity="0..1" />
+    <End Type="ProcurementModel.Property" Role="Property1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Property1">
+        <PropertyRef Name="isSubpropertyOf" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

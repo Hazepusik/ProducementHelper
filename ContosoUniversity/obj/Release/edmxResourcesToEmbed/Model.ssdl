@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProcurementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Bid">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="tenderId" Type="int" Nullable="false" />
+    <Property Name="participantId" Type="int" Nullable="false" />
+    <Property Name="propertyId" Type="int" />
+    <Property Name="defaultValue" Type="float" Nullable="false" />
+    <Property Name="maxValue" Type="float" />
+  </EntityType>
+  <EntityType Name="Function">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Participant">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="isOurs" Type="bit" />
+  </EntityType>
+  <EntityType Name="Property">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="importance" Type="int" Nullable="false" />
+    <Property Name="isSubpropertyOf" Type="int" />
+    <Property Name="minValue" Type="float" />
+    <Property Name="maxValue" Type="float" />
+    <Property Name="step" Type="float" />
+    <Property Name="toMax" Type="bit" Nullable="false" />
+    <Property Name="isDefault" Type="bit" />
+    <Property Name="functionId" Type="int" Nullable="false" />
+    <Property Name="isPrice" Type="bit" />
+  </EntityType>
+  <EntityType Name="Tender">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" />
+    <Property Name="minPrice" Type="float" />
+    <Property Name="maxPrice" Type="float" />
+  </EntityType>
+  <Association Name="FK_Bid_Participant">
+    <End Role="Participant" Type="Self.Participant" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Bid" Type="Self.Bid" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Participant">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Bid">
+        <PropertyRef Name="participantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Bid_Property">
+    <End Role="Property" Type="Self.Property" Multiplicity="0..1" />
+    <End Role="Bid" Type="Self.Bid" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Bid">
+        <PropertyRef Name="propertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Bid_Tender">
+    <End Role="Tender" Type="Self.Tender" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Bid" Type="Self.Bid" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tender">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Bid">
+        <PropertyRef Name="tenderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Property_Function">
+    <End Role="Function" Type="Self.Function" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Property" Type="Self.Property" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Function">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Property">
+        <PropertyRef Name="functionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Property_Property">
+    <End Role="Property" Type="Self.Property" Multiplicity="0..1" />
+    <End Role="Property1" Type="Self.Property" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Property1">
+        <PropertyRef Name="isSubpropertyOf" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ProcurementModelStoreContainer">
+    <EntitySet Name="Bid" EntityType="Self.Bid" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Function" EntityType="Self.Function" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Participant" EntityType="Self.Participant" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Property" EntityType="Self.Property" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tender" EntityType="Self.Tender" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Bid_Participant" Association="Self.FK_Bid_Participant">
+      <End Role="Participant" EntitySet="Participant" />
+      <End Role="Bid" EntitySet="Bid" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Bid_Property" Association="Self.FK_Bid_Property">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="Bid" EntitySet="Bid" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Bid_Tender" Association="Self.FK_Bid_Tender">
+      <End Role="Tender" EntitySet="Tender" />
+      <End Role="Bid" EntitySet="Bid" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Property_Function" Association="Self.FK_Property_Function">
+      <End Role="Function" EntitySet="Function" />
+      <End Role="Property" EntitySet="Property" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Property_Property" Association="Self.FK_Property_Property">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="Property1" EntitySet="Property" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

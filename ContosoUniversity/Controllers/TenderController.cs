@@ -6,8 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using ContosoUniversity.DAL;
-using ContosoUniversity.Models;
 using PagedList;
 using System.Data.Entity.Infrastructure;
 
@@ -42,6 +40,27 @@ namespace ContosoUniversity.Controllers
             return View(tenders.ToPagedList(pageNumber, pageSize));
         }
 
+        // GET: Tender
+        public ViewResult ResultIndex(string sortOrder, int? page)
+        {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+            List<Tender> tenders = Tender.QueryAll();
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    tenders = tenders.OrderByDescending(p => p.name).ToList();
+                    break;
+                default:  // Name ascending 
+                    tenders = tenders.OrderBy(p => p.name).ToList();
+                    break;
+            }
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(tenders.ToPagedList(pageNumber, pageSize));
+        }
 
         // GET: Tender/Create
         public ActionResult Create()

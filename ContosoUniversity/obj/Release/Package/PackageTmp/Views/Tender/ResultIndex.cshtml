@@ -1,0 +1,35 @@
+﻿@model PagedList.IPagedList<ContosoUniversity.Tender>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Тендер";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<!-- Search
+    @using (Html.BeginForm("Index", "Tender", FormMethod.Get)) { <p> Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string) <input type="submit" value="Search" /> </p> }
+-->
+<table class="table">
+    <tr>
+        <th>Тендер</th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+                @Html.HiddenFor(modelItem => item.id)
+            <td>
+                @Html.ActionLink("Результаты " + item.name, "Result", new { id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("ResultIndex",
+    new { page, sortOrder = ViewBag.CurrentSort }))
